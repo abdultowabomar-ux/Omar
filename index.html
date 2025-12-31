@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مختبر المصطلحات القانونية - جامعة حلوان</title>
+<meta name="description" content="منصة تفاعلية لطلاب كلية الحقوق لمراجعة واختبار المصطلحات القانونية والاقتصادية.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://your-link.com/"> <meta property="og:title" content="⚖️ مختبر المصطلحات القانونية | جامعة حلوان">
+<meta property="og:description" content="ذاكر واختبر نفسك في أكثر من 150 مصطلح قانوني من واقع المحاضرات.">
+<meta property="og:image" content="https://your-link.com/image.jpg"> <meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="⚖️ مختبر المصطلحات القانونية | جامعة حلوان">
+<meta property="twitter:description" content="منصة مراجعة شاملة لطلاب الحقوق.">
+<meta property="twitter:image" content="https://your-link.com/image.jpg">
+
+    <style>
+        :root {
+            --primary: #0f2027;
+            --secondary: #ce1212;
+            --accent: #f8b500;
+            --bg: #eef2f3;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            margin: 0;
+            color: #333;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-study { background: var(--primary); color: white; }
+        .btn-quiz { background: var(--secondary); color: white; }
+        .nav-btn:hover { opacity: 0.8; transform: translateY(-2px); }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        /* وضع الدراسة */
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.1rem;
+        }
+
+        .group-container {
+            background: white;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .group-header {
+            background: #2c5364;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1px;
+            background: #eee;
+        }
+
+        .vocab-item {
+            background: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .en-text { font-weight: bold; color: var(--secondary); font-family: 'Courier New', Courier, monospace; }
+
+        /* وضع الاختبار */
+        #quiz-section { display: none; text-align: center; }
+        .quiz-box {
+            background: white;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 8px solid var(--accent);
+        }
+
+        .q-title { font-size: 1.8rem; margin-bottom: 20px; color: var(--primary); }
+        
+        input[type="text"] {
+            width: 90%;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .opt-btn {
+            padding: 12px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .opt-btn:hover { background: var(--accent); }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>⚖️ الحقوق - مادة المصطلحات القانونية</h1>
+    <p>تطبيق المراجعة الشامل لكلية الحقوق</p>
+</header>
+
+<div class="container">
+    <div class="nav-container">
+        <button class="nav-btn btn-study" onclick="showSection('study')">📚 عرض جميع المصطلحات</button>
+        <button class="nav-btn btn-quiz" onclick="showSection('quiz')">✍️ ابدأ الاختبار التفاعلي</button>
+    </div>
+
+    <div id="study-section">
+        <input type="text" class="search-box" id="searchInput" onkeyup="filterVocab()" placeholder="ابحث في أكثر من 150 مصطلح...">
+        <div id="studyList"></div>
+    </div>
+
+    <div id="quiz-section">
+        <div class="quiz-box">
+            <div id="quiz-init">
+                <h3>جاهز للاختبار في كل المنهج؟</h3>
+                <p>سيتم سؤالك عن مصطلحات عشوائية من الصور</p>
+                <button class="nav-btn btn-quiz" onclick="nextQuestion()">ابدأ الآن</button>
+            </div>
+
+            <div id="quiz-content" class="hidden">
+                <div class="q-title" id="questionText">المصطلح</div>
+                <input type="text" id="typeInput" placeholder="اكتب المصطلح بالإنجليزي...">
+                <div class="options-container" id="optionsArea"></div>
+                <button class="nav-btn btn-study" style="margin-top:20px" id="nextBtn" onclick="nextQuestion()">السؤال التالي ⬅️</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const fullDatabase = {
+        "المحاضرة 1: الأسواق المالية والاقتصاد": [
+            {ar: "أسواق المال", en: "Financial markets"}, {ar: "الأوراق المالية", en: "Securities"},
+            {ar: "السندات", en: "Bonds"}, {ar: "الأسهم العادية", en: "Common stocks"},
+            {ar: "حاملو الأسهم", en: "Share holders"}, {ar: "الادخار", en: "Saving"},
+            {ar: "الدخل", en: "Income"}, {ar: "الاستهلاك", en: "Consumption"},
+            {ar: "فرص استثمارية", en: "Investment opportunities"}, {ar: "الأموال", en: "Funds"},
+            {ar: "وحدات الفائض", en: "Surplus units"}, {ar: "وحدات العجز", en: "Shortage units"},
+            {ar: "المدخرون", en: "Savers"}, {ar: "المقترضون", en: "Borrowers"},
+            {ar: "الودائع", en: "Deposits"}, {ar: "سعر الفائدة", en: "Interest rate"},
+            {ar: "القروض", en: "Loans"}, {ar: "المستثمرون", en: "Investors"},
+            {ar: "إصدار الأسهم", en: "Issuing stocks"}, {ar: "الأرباح", en: "Profits"},
+            {ar: "حق التصويت", en: "Voting right"}, {ar: "سعر فائدة ثابت", en: "Fixed interest rate"},
+            {ar: "الناتج المحلي الإجمالي", en: "Gross domestic product (GDP)"}
+        ],
+        "المحاضرة 2: البنوك والسياسة النقدية": [
+            {ar: "العملات", en: "Currencies"}, {ar: "الأصول", en: "Assets"},
+            {ar: "سعر الصرف", en: "Exchange rate"}, {ar: "سعر الصرف الاسمي", en: "Nominal exchange rate"},
+            {ar: "سعر الصرف الحقيقي", en: "Real exchange rate"}, {ar: "العملات السهلة", en: "Soft currencies"},
+            {ar: "العملات الصعبة", en: "Hard currencies"}, {ar: "أصل الدين", en: "Principal"},
+            {ar: "الإيرادات العامة", en: "Public revenues"}, {ar: "النفقات العامة", en: "Public spending"},
+            {ar: "الميزانية العامة", en: "Public budget"}, {ar: "عجز الموازنة", en: "Budget deficit"},
+            {ar: "السندات الحكومية", en: "Governmental bonds"}, {ar: "شهادات الإيداع", en: "Certificate deposit"},
+            {ar: "القروض العقارية", en: "Mortgages"}, {ar: "البنك المركزي", en: "Central bank"},
+            {ar: "البنوك التجارية", en: "Commercial banks"}, {ar: "ميزانية البنك", en: "Bank balance sheet"},
+            {ar: "الخصوم", en: "Liabilities"}, {ar: "ودائع تحت الطلب", en: "Demand deposits"},
+            {ar: "ودائع بإخطار", en: "Notice deposits"}, {ar: "ودائع محددة المدة", en: "Fixed term deposits"},
+            {ar: "رأس مال البنك", en: "Bank capital"}, {ar: "الاحتياطيات", en: "Reserves"},
+            {ar: "السيولة", en: "Liquidity"}, {ar: "الربحية", en: "Profitability"},
+            {ar: "المقرض الأخير", en: "Lender of last resort"}, {ar: "عمليات السوق المفتوحة", en: "Open market operations"}
+        ],
+        "المحاضرة 3: مصادر الالتزام والقانون المدني": [
+            {ar: "مصادر الالتزام", en: "Sources of obligation"}, {ar: "أطراف الالتزام", en: "Parties of obligation"},
+            {ar: "قانون العقود", en: "Contract law"}, {ar: "المسؤولية التقصيرية", en: "Tort liability"},
+            {ar: "التعويض", en: "Compensation"}, {ar: "الضرر", en: "Damage"},
+            {ar: "العلاقة السببية", en: "Causal relationship"}, {ar: "المسؤولية التعاقدية", en: "Contractual liability"},
+            {ar: "الإيجاب", en: "Offer"}, {ar: "القبول", en: "Acceptance"},
+            {ar: "عقد صحيح", en: "Valid contract"}, {ar: "عقد باطل", en: "Void contract"},
+            {ar: "عقد قابل للإبطال", en: "Voidable contract"}, {ar: "الخطأ", en: "Mistake"},
+            {ar: "القصد", en: "Intention"}, {ar: "الإهمال", en: "Negligence"},
+            {ar: "الردع", en: "Deterrence"}, {ar: "الدافع", en: "Motive"},
+            {ar: "التضخم", en: "Inflation"}
+        ],
+        "مصطلحات د. إيمان (التجارة الدولية)": [
+            {ar: "القدرة التنافسية", en: "Competitiveness"}, {ar: "السلع", en: "Commodities"},
+            {ar: "التخصص", en: "Specialization"}, {ar: "مذهب الحماية", en: "Protectionism"},
+            {ar: "قيود الاستثمار", en: "Investment restrictions"}, {ar: "التعريفة الجمركية", en: "Tariffs"},
+            {ar: "الحصة (الكوتا)", en: "A quota"}, {ar: "المنافسة الدولية", en: "International competition"},
+            {ar: "اللوائح", en: "Regulations"}, {ar: "السلع المستوردة", en: "Imported goods"},
+            {ar: "زيادة الكفاءة", en: "Increased efficiency"}, {ar: "اقتصاديات الحجم", en: "Economies of scale"},
+            {ar: "المواد الخام", en: "Raw materials"}, {ar: "الاستثمار الأجنبي المباشر", en: "Foreign direct investment"}
+        ],
+        "الضرائب والبطالة": [
+            {ar: "الضريبة", en: "Tax"}, {ar: "الحوافز الضريبية", en: "Tax incentives"},
+            {ar: "ضريبة الشركات", en: "Corporation tax"}, {ar: "ضريبة مباشرة", en: "Direct tax"},
+            {ar: "ضريبة غير مباشرة", en: "Indirect tax"}, {ar: "دافع الضريبة", en: "Tax bearer"},
+            {ar: "القدرة على الدفع", en: "Ability to pay"}, {ar: "الدول المتقدمة", en: "Developed countries"},
+            {ar: "الدول النامية", en: "Developing countries"}, {ar: "وسيلة للتبادل", en: "Medium of exchange"},
+            {ar: "وحدة محاسبية", en: "Unit of account"}, {ar: "مخزن للقيمة", en: "Store of value"},
+            {ar: "بطالة اختيارية", en: "Voluntary unemployment"}, {ar: "بطالة إجبارية", en: "Involuntary unemployment"},
+            {ar: "البطالة الموسمية", en: "Seasonal unemployment"}
+        ],
+        "مصطلحات الأسئلة والجنايات": [
+            {ar: "توزيعات الأرباح", en: "Dividends"}, {ar: "التصفية", en: "Liquidation"},
+            {ar: "الأرباح المحتجزة", en: "Retained earnings"}, {ar: "التعثر المالي", en: "Default"},
+            {ar: "تقلبات الأسعار", en: "Price fluctuations"}, {ar: "ضريبة القيمة المضافة", en: "Value added tax"},
+            {ar: "الوسطاء الماليون", en: "Financial intermediaries"}, {ar: "الوعاء الضريبي", en: "Tax base"},
+            {ar: "أسواق الدين والملكية", en: "Debt and equity markets"}, {ar: "جنايات", en: "Felonies"},
+            {ar: "النيابة العامة", en: "Prosecution"}, {ar: "أسباب الإباحة", en: "Permissibility causes"}
+        ]
+    };
+
+    const allVocab = Object.values(fullDatabase).flat();
+
+    // بناء قائمة المذاكرة
+    function initStudy() {
+        const list = document.getElementById('studyList');
+        let html = '';
+        for(let section in fullDatabase) {
+            html += `<div class="group-container">
+                        <div class="group-header">${section}</div>
+                        <div class="vocab-grid">`;
+            fullDatabase[section].forEach(item => {
+                html += `<div class="vocab-item">
+                            <span>${item.ar}</span>
+                            <span class="en-text">${item.en}</span>
+                         </div>`;
+            });
+            html += `</div></div>`;
+        }
+        list.innerHTML = html;
+    }
+
+    function filterVocab() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const items = document.querySelectorAll('.vocab-item');
+        items.forEach(item => {
+            item.style.display = item.innerText.toLowerCase().includes(query) ? "flex" : "none";
+        });
+    }
+
+    // نظام الاختبار
+    function showSection(s) {
+        document.getElementById('study-section').style.display = s==='study'?'block':'none';
+        document.getElementById('quiz-section').style.display = s==='quiz'?'block':'none';
+    }
+
+    function nextQuestion() {
+        document.getElementById('quiz-init').classList.add('hidden');
+        document.getElementById('quiz-content').classList.remove('hidden');
+        document.getElementById('typeInput').value = "";
+        
+        const randomItem = allVocab[Math.floor(Math.random()*allVocab.length)];
+        document.getElementById('questionText').innerText = randomItem.ar;
+        
+        // خيارات
+        let opts = [randomItem.en];
+        while(opts.length < 4) {
+            let r = allVocab[Math.floor(Math.random()*allVocab.length)].en;
+            if(!opts.includes(r)) opts.push(r);
+        }
+        opts.sort(() => Math.random() - 0.5);
+        
+        const area = document.getElementById('optionsArea');
+        area.innerHTML = "";
+        opts.forEach(o => {
+            const b = document.createElement('button');
+            b.className = "opt-btn";
+            b.innerText = o;
+            b.onclick = () => {
+                if(o === randomItem.en) { b.style.background="#2ecc71"; alert("صح!"); }
+                else { b.style.background="#e74c3c"; alert("خطأ! الإجابة: " + randomItem.en); }
+            };
+            area.appendChild(b);
+        });
+    }
+
+    initStudy();
+</script>
+</body>
+</html>
