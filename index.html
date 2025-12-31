@@ -17,16 +17,14 @@
             --accent: #f8b500;
             --bg: #eef2f3;
             --white: #ffffff;
-            /* تدرج الواتساب الجديد متناسق مع الموقع */
             --wa-grad: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
         }
 
-        /* --- كود التغبيش وبطاقة التسجيل الجديد --- */
         #blur-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 32, 39, 0.7);
-            backdrop-filter: blur(12px); /* قوة التغبيش */
+            backdrop-filter: blur(12px);
             z-index: 9999;
             display: flex;
             justify-content: center;
@@ -44,8 +42,6 @@
             border-top: 6px solid var(--accent);
         }
 
-        .login-card h2 { color: var(--primary); margin-bottom: 20px; }
-        
         .login-input, .login-select {
             width: 100% !important;
             padding: 12px !important;
@@ -54,7 +50,6 @@
             border-radius: 10px !important;
             box-sizing: border-box !important;
             font-family: inherit;
-            font-size: 1rem;
         }
 
         .confirm-btn {
@@ -66,169 +61,130 @@
             cursor: pointer;
             font-weight: bold;
             width: 100%;
-            font-size: 1.1rem;
             transition: 0.3s;
         }
         
-        .confirm-btn:hover { background: var(--secondary); }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
 
-        /* -------------------------------------- */
+        header { background: linear-gradient(to right, #0f2027, #203a43, #2c5364); color: white; padding: 30px; text-align: center; border-bottom: 5px solid var(--accent); }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
-            margin: 0;
-            color: #333;
-            padding-bottom: 50px;
-        }
+     .nav-container { 
+    display: grid; /* استخدام شبكة لتوزيع الأزرار */
+    grid-template-columns: 1fr 1fr; /* تقسيم المساحة لنصفين متساويين */
+    gap: 15px; /* المسافة بين المربعين */
+    margin: 20px 0; 
+}
+.nav-btn { 
+    padding: 20px 10px; /* زيادة الحشو الرأسي ليعطي شكل المربع */
+    border: none; 
+    border-radius: 12px; /* زوايا مستديرة بشكل أجمل */
+    cursor: pointer; 
+    font-weight: bold; 
+    transition: 0.3s; 
+    display: flex; /* ليتوسط النص داخل المربع */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.95rem; /* حجم الخط */
+    min-height: 100px; /* ضمان حد أدنى للارتفاع لتبدو كمربعات */
+}
 
-        header {
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            border-bottom: 5px solid var(--accent);
-        }
+/* حذف العرض الثابت (250px) الذي كان موجوداً في الكود القديم */
+.btn-study { 
+    background: var(--primary); 
+    color: white; 
+    width: 100% !important; /* جعل الزر يأخذ كامل مساحة نصف الشبكة */
+}
 
-        .nav-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
+.btn-quiz { 
+    background: var(--secondary); 
+    color: white; 
+    width: 100% !important;
+}
 
-        .nav-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-
-        .btn-study { background: var(--primary); color: white; }
-        .btn-quiz { background: var(--secondary); color: white; }
-        .nav-btn:hover { opacity: 0.8; transform: translateY(-2px); }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
-        /* وضع الدراسة */
-        .search-box {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            font-size: 1.1rem;
-        }
+        #review-table { width: 100%; border-collapse: collapse; margin-top: 15px; direction: rtl; font-size: 0.9rem; }
+        #review-table th, #review-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        #review-table th { background: var(--primary); color: white; }
 
-        .group-container {
-            background: white;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        .quiz-box { background: white; max-width: 600px; margin: 20px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid var(--accent); position: relative; }
+        .options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .opt-btn { padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        
+        .hidden { display: none !important; }
+        .search-box { width: 100%; padding: 15px; margin: 20px 0; border: 2px solid #ccc; border-radius: 10px; box-sizing: border-box; }
 
-        .group-header {
-            background: #2c5364;
-            color: white;
-            padding: 15px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: #eee; }
+        .vocab-item { background: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .group-container { background: white; margin-bottom: 25px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .group-header { background: #2c5364; color: white; padding: 15px; font-weight: bold; }
 
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1px;
-            background: #eee;
-        }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--wa-grad); color: #FFF; padding: 12px 25px; border-radius: 50px; text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1000; border: 1px solid var(--accent); }
 
-        .vocab-item {
-            background: white;
-            padding: 12px 20px;
+        /* تنسيق نافذة المشاركة */
+        .feedback-blur {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            transition: 0.5s;
         }
 
-        .en-text { font-weight: bold; color: var(--secondary); font-family: 'Courier New', Courier, monospace; }
-
-        /* وضع الاختبار */
-        #quiz-section { display: none; text-align: center; }
-        .quiz-box {
+        .feedback-card {
             background: white;
-            max-width: 500px;
-            margin: 20px auto;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-top: 8px solid var(--accent);
-        }
-
-        .q-title { font-size: 1.8rem; margin-bottom: 20px; color: var(--primary); }
-        
-        input[type="text"] {
+            text-align: center;
             width: 90%;
-            padding: 15px;
-            font-size: 1.2rem;
-            border: 2px solid #ddd;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-top: 5px solid #f8b500;
+        }
+
+        .feedback-icon { font-size: 40px; margin-bottom: 10px; }
+
+        .close-popup {
+            position: absolute;
+            top: 10px; right: 15px;
+            background: none; border: none;
+            font-size: 25px; cursor: pointer; color: #888;
+        }
+
+        .wa-btn-popup {
+            display: inline-block;
+            margin-top: 15px;
+            background: #25d366;
+            color: white;
+            padding: 10px 20px;
             border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .options-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .opt-btn {
-            padding: 12px;
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .opt-btn:hover { background: var(--accent); }
-
-        .hidden { display: none; }
-
-        /* --- كود أيقونة واتساب الجديدة المعدلة بالتدرج اللوني للموقع --- */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--wa-grad); /* التدرج المتناسق مع الموقع */
-            color: #FFF;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: transform 0.3s ease;
-            border: 1px solid var(--accent);
+            font-weight: bold;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.05);
-            color: var(--accent);
+        /* تنسيق عداد الوقت */
+        #timer-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        #timer-bar {
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.1s linear;
         }
 
-        .whatsapp-float i {
-            font-size: 24px;
-        }
     </style>
 </head>
 <body>
@@ -256,7 +212,7 @@
 <div class="container">
     <div class="nav-container">
         <button class="nav-btn btn-study" onclick="showSection('study')">📚 عرض جميع المصطلحات</button>
-        <button class="nav-btn btn-quiz" onclick="showSection('quiz')">✍️ ابدأ الاختبار التفاعلي</button>
+        <button class="nav-btn btn-quiz" onclick="showSection('quiz')">✍️ الانتقال لصفحة الاختبارات</button>
     </div>
 
     <div id="study-section">
@@ -264,19 +220,49 @@
         <div id="studyList"></div>
     </div>
 
-    <div id="quiz-section">
+    <div id="quiz-section" style="display:none;">
         <div class="quiz-box">
-            <div id="quiz-init">
-                <h3>جاهز للاختبار في كل المنهج؟</h3>
-                <p>سيتم سؤالك عن مصطلحات عشوائية من الصور</p>
-                <button class="nav-btn btn-quiz" onclick="nextQuestion()">ابدأ الآن</button>
+            <div id="quiz-init-box">
+                <h3 style="text-align: center;">اختر نوع الاختبار</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                    <button class="nav-btn btn-quiz" style="width:100%;" onclick="startFullQuiz('all')">
+                        ✍️ اختبار شامل (40 سؤال)
+                    </button>
+                    <button class="nav-btn" style="width:100%; background:#28a745; color:white;" onclick="startFullQuiz('french')">
+                        🇫🇷 اختبار فرنسي (30 سؤال)
+                    </button>
+                </div>
+                <p style="text-align:center; color:#666; margin-top:15px; font-size:0.9rem;">ملاحظة: مدة كل سؤال 15 ثانية فقط</p>
+            </div>
+
+            <div id="quiz-header" class="hidden" style="margin-bottom:15px; font-weight:bold; border-bottom:1px solid #eee; padding-bottom:10px;">
+                سؤال: <span id="currentQNum">0</span> / <span id="totalQNum">40</span> | الدرجة: <span id="liveScore">0</span>
             </div>
 
             <div id="quiz-content" class="hidden">
-                <div class="q-title" id="questionText">المصطلح</div>
-                <input type="text" id="typeInput" placeholder="اكتب المصطلح بالإنجليزي...">
+                <div id="timer-bar-container"><div id="timer-bar"></div></div>
+                <div style="font-size:1.4rem; color:var(--primary); margin-bottom:15px" id="questionText">المصطلح</div>
                 <div class="options-container" id="optionsArea"></div>
-                <button class="nav-btn btn-study" style="margin-top:20px" id="nextBtn" onclick="nextQuestion()">السؤال التالي ⬅️</button>
+            </div>
+
+            <div id="quiz-result" class="hidden">
+                <h2 id="resultStatus">النتيجة النهائية</h2>
+                <p style="font-size:1.3rem" id="resultText">لقد أجبت بشكل صحيح على <span id="finalScore" style="color:var(--secondary); font-weight:bold;">0</span> من 40</p>
+                
+                <div style="max-height: 300px; overflow-y: auto; margin: 20px 0; border: 1px solid #ddd;">
+                    <table id="review-table">
+                        <thead>
+                            <tr>
+                                <th>المصطلح</th>
+                                <th>إجابتك</th>
+                                <th>الصح</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
+
+                <button class="nav-btn btn-study" onclick="goToHome()">العودة للرئيسية 🏠</button>
             </div>
         </div>
     </div>
@@ -284,35 +270,63 @@
 
 <a href="https://wa.me/201202763155" class="whatsapp-float" target="_blank">
     <span>تواصل معنا</span>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12.04 2C6.5 2 2 6.5 2 12.04C2 13.81 2.47 15.53 3.36 17.03L2 22L7.13 20.66C8.56 21.44 10.2 21.86 11.89 21.86H11.94C17.48 21.86 21.98 17.36 21.98 11.82C21.98 9.14 20.94 6.61 19.04 4.71C17.14 2.81 14.61 1.77 11.94 1.77L12.04 2ZM11.94 3.63C14.12 3.63 16.16 4.48 17.71 6.02C19.26 7.56 20.12 9.61 20.12 11.78C20.12 16.32 16.42 20.02 11.88 20.02C10.43 20.02 9.04 19.64 7.82 18.91L7.53 18.73L4.47 19.53L5.29 16.57L5.09 16.25C4.28 14.96 3.85 13.47 3.85 11.93C3.86 7.39 7.56 3.69 12.1 3.69L11.94 3.63ZM8.84 7.58C8.65 7.58 8.35 7.65 8.1 7.92C7.86 8.19 7.17 8.86 7.17 10.22C7.17 11.58 8.16 12.89 8.3 13.08C8.44 13.27 10.23 16.03 12.98 17.21C13.63 17.49 14.13 17.66 14.53 17.78C15.18 17.99 15.77 17.96 16.21 17.9C16.7 17.82 17.72 17.27 17.93 16.69C18.14 16.11 18.14 15.61 18.07 15.51C18 15.41 17.79 15.35 17.48 15.19C17.17 15.03 15.63 14.28 15.35 14.18C15.06 14.07 14.85 14.02 14.64 14.34C14.43 14.66 13.82 15.37 13.64 15.58C13.46 15.79 13.27 15.82 12.96 15.66C12.65 15.5 11.66 15.17 10.48 14.12C9.56 13.3 8.94 12.29 8.76 11.98C8.58 11.67 8.74 11.5 8.9 11.34C9.04 11.2 9.22 10.97 9.37 10.79C9.53 10.61 9.58 10.48 9.68 10.27C9.78 10.06 9.73 9.87 9.68 9.72C9.63 9.56 9.22 8.56 9.05 8.15C8.88 7.74 8.71 7.8 8.58 7.8L8.84 7.58Z"/>
-    </svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12.04 2C6.5 2 2 6.5 2 12.04C2 13.81 2.47 15.53 3.36 17.03L2 22L7.13 20.66C8.56 21.44 10.2 21.86 11.89 21.86H11.94C17.48 21.86 21.98 17.36 21.98 11.82C21.98 9.14 20.94 6.61 19.04 4.71C17.14 2.81 14.61 1.77 11.94 1.77L12.04 2ZM11.94 3.63C14.12 3.63 16.16 4.48 17.71 6.02C19.26 7.56 20.12 9.61 20.12 11.78C20.12 16.32 16.42 20.02 11.88 20.02C10.43 20.02 9.04 19.64 7.82 18.91L7.53 18.73L4.47 19.53L5.29 16.57L5.09 16.25C4.28 14.96 3.85 13.47 3.85 11.93C3.86 7.39 7.56 3.69 12.1 3.69L11.94 3.63ZM8.84 7.58C8.65 7.58 8.35 7.65 8.1 7.92C7.86 8.19 7.17 8.86 7.17 10.22C7.17 11.58 8.16 12.89 8.3 13.08C8.44 13.27 10.23 16.03 12.98 17.21C13.63 17.49 14.13 17.66 14.53 17.78C15.18 17.99 15.77 17.96 16.21 17.9C16.7 17.82 17.72 17.27 17.93 16.69C18.14 16.11 18.14 15.61 18.07 15.51C18 15.41 17.79 15.35 17.48 15.19C17.17 15.03 15.63 14.28 15.35 14.18C15.06 14.07 14.85 14.02 14.64 14.34C14.43 14.66 13.82 15.37 13.64 15.58C13.46 15.79 13.27 15.82 12.96 15.66C12.65 15.5 11.66 15.17 10.48 14.12C9.56 13.3 8.94 12.29 8.76 11.98C8.58 11.67 8.74 11.5 8.9 11.34C9.04 11.2 9.22 10.97 9.37 10.79C9.53 10.61 9.58 10.48 9.68 10.27C9.78 10.06 9.73 9.87 9.68 9.72C9.63 9.56 9.22 8.56 9.05 8.15C8.88 7.74 8.71 7.8 8.58 7.8L8.84 7.58Z"/></svg>
 </a>
 
+<div id="feedback-overlay" class="feedback-blur hidden">
+    <div class="feedback-card">
+        <button class="close-popup" onclick="closePopup()">×</button>
+        <div class="feedback-icon">📧</div>
+        <h3>شارك معنا في الخير</h3>
+        <p>لو عندك أسئلة أو جمل تحب تضيفها في الموقع، ابعتها لينا على الواتساب وساهم في مساعدة زمايلك.</p>
+        <a href="https://wa.me/201202763155" target="_blank" class="wa-btn-popup">إرسال على الواتساب</a>
+    </div>
+</div>
+
 <script>
-    function registerUser() {
-        const name = document.getElementById('userName').value;
-        const grade = document.getElementById('userGrade').value;
-        const BOT_TOKEN = "8059026799:AAHJYZej9ecO4GJ3PAGbtXI3EXKt9wStM_4";
-        const CHAT_ID = "6068331455";
-
-        if(name.trim() === "" || grade === "") {
-            alert("من فضلك أدخل الاسم واختر الفرقة");
-            return;
-        }
-
-        const msg = `🔔 دخول جديد للموسوعة:\n👤 الاسم: ${name}\n🎓 الفرقة: ${grade}`;
-        
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
-        .then(() => {
-            document.getElementById('blur-overlay').style.display = 'none';
+// بيانات التليجرام المستخرجة من كودك
+const TELEGRAM_TOKEN = "8059026799:AAHJYZej9ecO4GJ3PAGbtXI3EXKt9wStM_4";
+const TELEGRAM_CHAT_ID = "6068331455";
+function sendTelegramNotification(message) {
+    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: "Markdown"
         })
-        .catch(() => {
-            document.getElementById('blur-overlay').style.display = 'none';
-        });
-    }
+    }).catch(err => console.error("Telegram Error:", err));
+}
 
     const fullDatabase = {
+        "المحاضرة 7: مصطلحات اللغة الفرنسية": [
+            {ar: "التزام", en: "Obligation"}, {ar: "رابطة قانونية", en: "Lien juridique"},
+            {ar: "دائن", en: "Créancier"}, {ar: "مدين", en: "Débiteur"},
+            {ar: "أداء", en: "Prestation"}, {ar: "دفع", en: "Paiement"},
+            {ar: "تصرف", en: "Acte"}, {ar: "عقد", en: "Contrat"},
+            {ar: "واقعة قانونية", en: "Fait juridique"}, {ar: "القانون المدنى", en: "Code Civil"},
+            {ar: "سلطان الإرادة", en: "Autonomie de la volonté"}, {ar: "شبه عقد", en: "Quasi/contrat"},
+            {ar: "التزام مدني", en: "Obligation civile"}, {ar: "التزام طبيعي", en: "Obligation naturelle"},
+            {ar: "تصرف قانونی", en: "Acte juridique"}, {ar: "اتفاق إرادات", en: "Accord de volontés"},
+            {ar: "مسئولية مدنية", en: "Responsabilité civile"}, {ar: "التزام بإعطاء", en: "Obligation de donner"},
+            {ar: "التزام بعمل", en: "Obligation de faire"}, {ar: "حق عيني", en: "Droit réel"},
+            {ar: "عقد بيع", en: "Contrat de vente"}, {ar: "ملكية", en: "Propriété"},
+            {ar: "هبة", en: "Donation"}, {ar: "العقد شريعة المتعاقدين", en: "Contrat fait la loi des parties"},
+            {ar: "حسن النية مفترض دائما", en: "Bonne foi est toujours présumée"}, {ar: "لا يجوز الإثراء على حساب الغير", en: "Personne ne doit s'enrichir au détriment d'autrui"},
+            {ar: "عقد إيجار", en: "Contrat de louage"}, {ar: "عقد تأمين", en: "Contrat d'assurance"},
+            {ar: "بطلان مطلق", en: "Nullité absolue"}, {ar: "حق أصلي", en: "Droit principal"},
+            {ar: "وصية", en: "Testament"}, {ar: "حالة الضرورة", en: "Etat de nécessité"},
+            {ar: "أهلية", en: "Capacité"}, {ar: "قوة قاهرة", en: "Force majeure"},
+            {ar: "أثر رجعي", en: "Force rétroactive"}, {ar: "مسئولية تقصيرية", en: "Responsabilité délictuelle"},
+            {ar: "النظام العام", en: "Ordre public"}, {ar: "ضرر مادي", en: "Dommage (Préjudice)"},
+            {ar: "تعويض", en: "Indemnité"}, {ar: "الإثراء بلا سبب", en: "Enrichissement sans cause"},
+            {ar: "دفاع شرعى", en: "Légitime défense"}, {ar: "عقوبة الإعدام", en: "Peine capitale"},
+            {ar: "غرامة", en: "Amende"}, {ar: "جناية", en: "Crime"},
+            {ar: "جنحة", en: "Délit"}, {ar: "مخالفة", en: "Contravention"},
+            {ar: "نصب", en: "Escroquerية"}, {ar: "محكمة الجنايات", en: "Cour d'assise"}
+        ],
         "المحاضرة 1: الأسواق المالية والاقتصاد": [
             {ar: "أسواق المال", en: "Financial markets"}, {ar: "الأوراق المالية", en: "Securities"},
             {ar: "السندات", en: "Bonds"}, {ar: "الأسهم العادية", en: "Common stocks"},
@@ -385,63 +399,202 @@
     };
 
     const allVocab = Object.values(fullDatabase).flat();
+    let quizCount = 0;
+    let score = 0;
+    let userAnswers = [];
+    let currentCorrect = "";
+    let currentArabic = "";
+    let currentActivePool = [];
+    let maxQuestionsForCurrentQuiz = 40;
+    let timerInterval;
+    const TIME_LIMIT = 15; // 15 ثانية لكل سؤال
+
+    function registerUser() {
+    const name = document.getElementById('userName').value;
+    const grade = document.getElementById('userGrade').value;
+
+    if(!name || !grade) return alert("أكمل البيانات");
+
+    // 1. حفظ البيانات لاستخدامها لاحقاً
+    window.currentUser = { name, grade };
+
+    // 2. إرسال إشعار الدخول لتليجرام
+    const loginMsg = `🔔 *دخول جديد للموقع*\n👤 الاسم: ${name}\n🎓 الفرقة: ${grade}\n⏰ الوقت: ${new Date().toLocaleString('ar-EG')}`;
+    sendTelegramNotification(loginMsg);
+
+    // 3. إخفاء واجهة الدخول
+    document.getElementById('blur-overlay').style.display = 'none';
+}
+
 
     function initStudy() {
-        const list = document.getElementById('studyList');
         let html = '';
         for(let section in fullDatabase) {
-            html += `<div class="group-container">
-                        <div class="group-header">${section}</div>
-                        <div class="vocab-grid">`;
+            html += `<div class="group-container"><div class="group-header">${section}</div><div class="vocab-grid">`;
             fullDatabase[section].forEach(item => {
-                html += `<div class="vocab-item">
-                            <span>${item.ar}</span>
-                            <span class="en-text">${item.en}</span>
-                         </div>`;
+                html += `<div class="vocab-item"><span>${item.ar}</span><span style="color:var(--secondary); font-weight:bold;">${item.en}</span></div>`;
             });
             html += `</div></div>`;
         }
-        list.innerHTML = html;
+        document.getElementById('studyList').innerHTML = html;
     }
 
     function filterVocab() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const items = document.querySelectorAll('.vocab-item');
-        items.forEach(item => {
-            item.style.display = item.innerText.toLowerCase().includes(query) ? "flex" : "none";
+        let q = document.getElementById('searchInput').value.toLowerCase();
+        document.querySelectorAll('.vocab-item').forEach(i => {
+            i.style.display = i.innerText.toLowerCase().includes(q) ? "flex" : "none";
         });
     }
 
     function showSection(s) {
         document.getElementById('study-section').style.display = s==='study'?'block':'none';
         document.getElementById('quiz-section').style.display = s==='quiz'?'block':'none';
+        if(s === 'quiz') goToHome(); 
+    }
+
+    function startFullQuiz(type) {
+        quizCount = 0; 
+        score = 0; 
+        userAnswers = [];
+
+        if (type === 'french') {
+            currentActivePool = fullDatabase["المحاضرة 7: مصطلحات اللغة الفرنسية"];
+            maxQuestionsForCurrentQuiz = 30;
+        } else {
+            currentActivePool = allVocab;
+            maxQuestionsForCurrentQuiz = 40;
+        }
+
+        document.getElementById('totalQNum').innerText = maxQuestionsForCurrentQuiz;
+        document.getElementById('quiz-init-box').classList.add('hidden');
+        document.getElementById('quiz-header').classList.remove('hidden');
+        document.getElementById('quiz-content').classList.remove('hidden');
+        document.getElementById('quiz-result').classList.add('hidden');
+        
+        nextQuestion();
+    }
+
+    function startTimer() {
+        let timeLeft = TIME_LIMIT;
+        const bar = document.getElementById('timer-bar');
+        bar.style.width = "100%";
+        
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            timeLeft -= 0.1;
+            let percentage = (timeLeft / TIME_LIMIT) * 100;
+            bar.style.width = percentage + "%";
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                checkAnswer(null, null); // اعتبار الإجابة خاطئة عند انتهاء الوقت
+            }
+        }, 100);
     }
 
     function nextQuestion() {
-        document.getElementById('quiz-init').classList.add('hidden');
-        document.getElementById('quiz-content').classList.remove('hidden');
-        const randomItem = allVocab[Math.floor(Math.random()*allVocab.length)];
-        document.getElementById('questionText').innerText = randomItem.ar;
-        
-        let opts = [randomItem.en];
+        if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
+        quizCount++;
+        document.getElementById('currentQNum').innerText = quizCount;
+        document.getElementById('liveScore').innerText = score;
+
+        let item = currentActivePool[Math.floor(Math.random()*currentActivePool.length)];
+        currentCorrect = item.en;
+        currentArabic = item.ar;
+        document.getElementById('questionText').innerText = currentArabic;
+
+        let opts = [currentCorrect];
         while(opts.length < 4) {
-            let r = allVocab[Math.floor(Math.random()*allVocab.length)].en;
+            let r = currentActivePool[Math.floor(Math.random()*currentActivePool.length)].en;
             if(!opts.includes(r)) opts.push(r);
         }
         opts.sort(() => Math.random() - 0.5);
-        
-        const area = document.getElementById('optionsArea');
+
+        let area = document.getElementById('optionsArea');
         area.innerHTML = "";
         opts.forEach(o => {
-            const b = document.createElement('button');
+            let b = document.createElement('button');
             b.className = "opt-btn";
             b.innerText = o;
-            b.onclick = () => {
-                if(o === randomItem.en) { b.style.background="#2ecc71"; alert("صح!"); }
-                else { b.style.background="#e74c3c"; alert("خطأ! الإجابة: " + randomItem.en); }
-            };
+            b.onclick = () => checkAnswer(o, b);
             area.appendChild(b);
         });
+
+        startTimer();
+    }
+
+    function checkAnswer(sel, btn) {
+        clearInterval(timerInterval);
+        document.querySelectorAll('.opt-btn').forEach(b => b.disabled = true);
+        
+        let isCorrect = (sel === currentCorrect);
+        
+        if (sel !== null) {
+            if(isCorrect) { 
+                score++; 
+                btn.style.background = "#2ecc71"; 
+                btn.style.color="white"; 
+            } else { 
+                btn.style.background = "#e74c3c"; 
+                btn.style.color="white"; 
+            }
+        }
+
+        userAnswers.push({
+            ar: currentArabic, 
+            sel: sel || "انتهى الوقت", 
+            correct: currentCorrect, 
+            isOk: isCorrect
+        });
+
+        setTimeout(nextQuestion, 800);
+    }
+
+    function finishQuiz() {
+    clearInterval(timerInterval); // إيقاف العداد
+    document.getElementById('quiz-content').classList.add('hidden');
+    document.getElementById('quiz-header').classList.add('hidden');
+    document.getElementById('quiz-result').classList.remove('hidden');
+    
+    document.getElementById('finalScore').innerText = score;
+
+    // 1. تحديد نوع الاختبار لإرساله في الرسالة
+    const quizType = maxQuestionsForCurrentQuiz === 30 ? "🇫🇷 فرنساوي" : "⚖️ شامل";
+
+    // 2. إرسال النتيجة النهائية لتليجرام
+    const resultMsg = `🎯 *نتيجة اختبار الطالب*\n👤 الاسم: ${window.currentUser.name}\n🎓 الفرقة: ${window.currentUser.grade}\n📝 النوع: ${quizType}\n✅ الدرجة: ${score} من ${maxQuestionsForCurrentQuiz}`;
+    sendTelegramNotification(resultMsg);
+
+    // 3. عرض جدول المراجعة للطالب
+    let rows = "";
+    userAnswers.forEach(i => {
+        rows += `<tr>
+            <td>${i.ar}</td>
+            <td style="color:${i.isOk?'green':'red'}">${i.sel}</td>
+            <td style="color:green; font-weight:bold">${i.correct}</td>
+        </tr>`;
+    });
+    document.getElementById('resultsBody').innerHTML = rows;
+}
+
+    function goToHome() {
+        clearInterval(timerInterval);
+        document.getElementById('quiz-result').classList.add('hidden');
+        document.getElementById('quiz-content').classList.add('hidden');
+        document.getElementById('quiz-header').classList.add('hidden');
+        document.getElementById('quiz-init-box').classList.remove('hidden');
+    }
+
+    // نافذة "شارك في الخير"
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            const popup = document.getElementById('feedback-overlay');
+            if(popup) popup.classList.remove('hidden');
+        }, 5000); 
+    });
+
+    function closePopup() {
+        document.getElementById('feedback-overlay').classList.add('hidden');
     }
 
     initStudy();
