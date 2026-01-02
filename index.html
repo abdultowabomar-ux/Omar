@@ -3,200 +3,1281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جاري التطوير</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <title>الموسوعة القانونية الشاملة - حلوان</title>
+    <meta name="description" content="أقوى منصة لمراجعة المصطلحات القانونية لطلاب حقوق حلوان - مذاكرة واختبارات تفاعلية.">
+    <meta property="og:title" content="الموسوعة القانونية الشاملة ⚖️">
+    <meta property="og:description" content="راجع مادتك بأسلوب ذكي ومنظم.">
+    <meta property="og:image" content="https://img.icons8.com/fluency/96/law.png">
+    <meta name="author" content="Omar Abdel-Tawab Saleh">
+
+<meta name="description" content="تم تطوير هذا الموقع بواسطة ; Omar Abdel Tawab Saleh">
+
+
     <style>
         :root {
-            --orange: #FF8C00;
-            --blue: #00CCFF;
-            --dark-blue: #050a14;
+            --primary: #0f2027;
+            --secondary: #ce1212;
+            --accent: #f8b500;
+            --bg: #eef2f3;
+            --white: #ffffff;
+            --wa-grad: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-
-        body {
-            background-color: var(--dark-blue);
-            color: white;
-            min-height: 100vh;
+        #blur-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 32, 39, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-image: radial-gradient(circle at 50% 50%, #112240 0%, #050a14 100%);
         }
 
-        .header-status h1 {
-            color: var(--orange);
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            text-align: center;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px;
+        .login-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             width: 90%;
-            max-width: 450px;
-            padding: 25px;
+            max-width: 400px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-top: 6px solid var(--accent);
         }
 
-        .video-box {
-            width: 100%;
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid var(--blue);
-            margin-bottom: 20px;
+        .login-input, .login-select {
+            width: 100% !important;
+            padding: 12px !important;
+            margin-bottom: 15px !important;
+            border: 2px solid #ddd !important;
+            border-radius: 10px !important;
+            box-sizing: border-box !important;
+            font-family: inherit;
         }
 
-        video { width: 100%; display: block; background: #000; }
-
-        /* منطقة الإرسال - تحت الفيديو مباشرة */
-        .input-section {
-            margin-bottom: 25px;
-            text-align: right;
-        }
-
-        .input-section label {
-            font-size: 0.9rem;
-            color: #bdc3c7;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(0,0,0,0.2);
+        .confirm-btn {
+            background: var(--primary);
             color: white;
-            resize: none;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            transition: 0.3s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--orange);
-            box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
-        }
-
-        .send-btn {
-            width: 100%;
-            background: var(--orange);
-            color: var(--dark-blue);
             border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 900;
+            padding: 12px 30px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: bold;
+            width: 100%;
             transition: 0.3s;
-            font-size: 1rem;
         }
+        
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
 
-        .send-btn:hover {
-            background: var(--blue);
-            transform: translateY(-2px);
-        }
+        header { background: linear-gradient(to right, #0f2027, #203a43, #2c5364); color: white; padding: 30px; text-align: center; border-bottom: 5px solid var(--accent); }
 
-        /* أيقونات التواصل - في الأسفل */
-        .social-links {
+     .nav-container { 
+    display: grid; /* استخدام شبكة لتوزيع الأزرار */
+    grid-template-columns: 1fr 1fr; /* تقسيم المساحة لنصفين متساويين */
+    gap: 15px; /* المسافة بين المربعين */
+    margin: 20px 0; 
+}
+.nav-btn { 
+    padding: 20px 10px; /* زيادة الحشو الرأسي ليعطي شكل المربع */
+    border: none; 
+    border-radius: 12px; /* زوايا مستديرة بشكل أجمل */
+    cursor: pointer; 
+    font-weight: bold; 
+    transition: 0.3s; 
+    display: flex; /* ليتوسط النص داخل المربع */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.95rem; /* حجم الخط */
+    min-height: 100px; /* ضمان حد أدنى للارتفاع لتبدو كمربعات */
+}
+
+/* حذف العرض الثابت (250px) الذي كان موجوداً في الكود القديم */
+.btn-study { 
+    background: var(--primary); 
+    color: white; 
+    width: 100% !important; /* جعل الزر يأخذ كامل مساحة نصف الشبكة */
+}
+
+.btn-quiz { 
+    background: var(--secondary); 
+    color: white; 
+    width: 100% !important;
+}
+
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+
+        #review-table { width: 100%; border-collapse: collapse; margin-top: 15px; direction: rtl; font-size: 0.9rem; }
+        #review-table th, #review-table td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        #review-table th { background: var(--primary); color: white; }
+
+        .quiz-box { background: white; max-width: 600px; margin: 20px auto; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid var(--accent); position: relative; }
+        .options-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .opt-btn { padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        
+        .hidden { display: none !important; }
+        .search-box { width: 100%; padding: 15px; margin: 20px 0; border: 2px solid #ccc; border-radius: 10px; box-sizing: border-box; }
+
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: #eee; }
+        .vocab-item { background: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .group-container { background: white; margin-bottom: 25px; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .group-header { background: #2c5364; color: white; padding: 15px; font-weight: bold; }
+
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--wa-grad); color: #FFF; padding: 12px 25px; border-radius: 50px; text-decoration: none; display: flex; align-items: center; gap: 10px; z-index: 1000; border: 1px solid var(--accent); }
+
+        /* تنسيق نافذة المشاركة */
+        .feedback-blur {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
             display: flex;
             justify-content: center;
-            gap: 25px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
+            align-items: center;
+            transition: 0.5s;
         }
 
-        .social-links a { font-size: 2.2rem; transition: 0.3s; }
-        .fa-facebook { color: #1877F2; }
-        .fa-whatsapp { color: #25D366; }
-        .social-links a:hover { transform: scale(1.2); filter: brightness(1.2); }
-
-        /* حقوق الملكية */
-        .copyright {
-            margin-top: 30px;
-            font-size: 0.8rem;
-            color: #5d6d7e;
+        .feedback-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
             text-align: center;
-            letter-spacing: 1px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-top: 5px solid #f8b500;
         }
 
-        .copyright b { color: var(--blue); }
+        .feedback-icon { font-size: 40px; margin-bottom: 10px; }
+
+        .close-popup {
+            position: absolute;
+            top: 10px; right: 15px;
+            background: none; border: none;
+            font-size: 25px; cursor: pointer; color: #888;
+        }
+
+        .wa-btn-popup {
+            display: inline-block;
+            margin-top: 15px;
+            background: #25d366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* تنسيق عداد الوقت */
+        #timer-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        #timer-bar {
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.1s linear;
+        }
+            .tf-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+    }
+    .level-card {
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        border: 2px solid #2c5364;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+    }
+    .level-card:hover {
+        transform: translateY(-5px);
+        background: var(--primary);
+        color: white;
+        border-color: var(--accent);
+    }
+    .level-title { font-weight: bold; font-size: 1.1rem; display: block; }
+    .level-sub { font-size: 0.8rem; opacity: 0.8; }
+    /* تعريف حركة الهبوط */
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* تطبيق الحركة على الكروت */
+.vocab-item, .nav-btn, .level-card {
+    animation: slideDownFade 0.5s ease-out forwards;
+    opacity: 0; /* تبدأ مخفية ثم تظهر بالحركة */
+}
+
+/* إضافة تأخير بسيط بين كل كارت ليظهروا بالتوالي */
+.vocab-item:nth-child(1) { animation-delay: 0.1s; }
+.vocab-item:nth-child(2) { animation-delay: 0.2s; }
+.vocab-item:nth-child(3) { animation-delay: 0.3s; }
+.vocab-item:nth-child(4) { animation-delay: 0.4s; }
+.vocab-item:nth-child(5) { animation-delay: 0.5s; }
+
+
+
     </style>
 </head>
 <body>
 
-    <div class="header-status">
-        <h1><i class="fas fa-tools"></i> جاري تطوير المنصة</h1>
+<div id="blur-overlay">
+    <div class="login-card">
+        <h2>⚖️ دخول الطلاب</h2>
+        <input type="text" id="userName" class="login-input" placeholder="أدخل اسمك بالكامل">
+        <select id="userGrade" class="login-select">
+            <option value="" disabled selected>اختر الفرقة الدراسية</option>
+            <option value="الفرقة الأولى">الفرقة الأولى</option>
+            <option value="الفرقة الثانية">الفرقة الثانية</option>
+            <option value="الفرقة الثالثة">الفرقة الثالثة</option>
+            <option value="الفرقة الرابعة">الفرقة الرابعة</option>
+        </select>
+        <button class="confirm-btn" onclick="registerUser()">تأكيد الدخول</button>
+    </div>
+</div>
+
+<header>
+    <h1>⚖️ الحقوق - مادة المصطلحات القانونية</h1>
+    <p>تطبيق المراجعة الشامل لكلية الحقوق</p>
+</header>
+<div id="leaderboard-section" class="container" style="margin-top: 20px;">
+    <div style="background: white; padding: 15px; border-radius: 15px; border: 2px solid var(--accent);">
+        <h3 style="margin-top:0; color: var(--primary);">🏆 قائمة المتصدرين (Top 5)</h3>
+        <div id="leaderboard-list">
+            </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="nav-container">
+        <button class="nav-btn btn-study" onclick="showSection('study')">📚 عرض جميع المصطلحات</button>
+        <button class="nav-btn btn-quiz" onclick="showSection('quiz')">✍️ الانتقال لصفحة الاختبارات</button>
     </div>
 
-    <div class="card">
-        <div class="video-box">
-            <video controls>
-                <source src="./VN٢٠٢٦٠١٠٢_٠٣٠٥٥٩.mp4" type="video/mp4">
-            </video>
-        </div>
-
-        <div class="input-section">
-            <label>لو عندك أي أسئلة أو مصطلحات ابعتها لنا:</label>
-            <textarea id="userMessage" rows="3" placeholder="اكتب هنا..."></textarea>
-            <button class="send-btn" onclick="sendUserFeedback()">إرسال للمطورين</button>
-        </div>
-
-        <div class="social-links">
-            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/201202763155" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        </div>
+    <div id="study-section">
+        <input type="text" class="search-box" id="searchInput" onkeyup="filterVocab()" placeholder="ابحث في أكثر من 150 مصطلح...">
+        <div id="studyList"></div>
     </div>
 
-    <div class="copyright">
-        &copy; 2026 All Rights Reserved <br>
-        Developed by <b>Omar Abdel Tawab Saleh</b>
+    <div id="quiz-section" style="display:none;">
+        <div class="quiz-box">
+          <div id="quiz-init-box">
+    <h3 style="text-align: center; margin-bottom: 20px;">المركز الاختبارات التفاعلية ⚖️</h3>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+        <button class="nav-btn btn-quiz" onclick="startFullQuiz('all')">✍️ الشامل (40 سؤال)</button>
+        <button class="nav-btn" style="background:#2c5364; color:white;" onclick="startFullQuiz('french')">🇫🇷 الفرنساوي (30 سؤال)</button>
     </div>
 
-    <script>
-        const TELEGRAM_TOKEN = "8059026799:AAHJYZej9ecO4GJ3PAGbtXI3EXKt9wStM_4";
-        const TELEGRAM_CHAT_ID = "6068331455";
+    <h4 style="text-align: right; border-right: 4px solid var(--secondary); padding-right: 10px; margin-bottom: 15px;">سلسلة اختبارات (صح أو خطأ)</h4>
+    
+    <div id="tf-tests-grid" class="tf-grid">
+        </div>
+</div>
 
-        function sendToTelegram(text) {
-            const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-            return fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text, parse_mode: "Markdown" })
-            });
-        }
+    <p style="text-align:center; color:#666; margin-top:15px; font-size:0.9rem;">ملاحظة: مدة كل سؤال 15 ثانية فقط</p>
+</div>
 
-        function sendUserFeedback() {
-            const msgInput = document.getElementById('userMessage');
-            const message = msgInput.value.trim();
 
-            if (message === "") {
-                alert("من فضلك اكتب المصطلح أولاً");
-                return;
-            }
 
-            sendToTelegram(`📩 *رسالة جديدة*\n\n${message}`)
-                .then(() => {
-                    alert("تم الإرسال بنجاح!");
-                    msgInput.value = "";
-                });
-        }
+            <div id="quiz-header" class="hidden" style="margin-bottom:15px; font-weight:bold; border-bottom:1px solid #eee; padding-bottom:10px;">
+                سؤال: <span id="currentQNum">0</span> / <span id="totalQNum">40</span> | الدرجة: <span id="liveScore">0</span>
+            </div>
 
-        window.onload = () => {
-            sendToTelegram("🚀 *زائر جديد دخل الصفحة*");
+            <div id="quiz-content" class="hidden">
+                <div id="timer-bar-container"><div id="timer-bar"></div></div>
+                <div style="font-size:1.4rem; color:var(--primary); margin-bottom:15px" id="questionText">المصطلح</div>
+                <div class="options-container" id="optionsArea"></div>
+            </div>
+
+            <div id="quiz-result" class="hidden">
+                <h2 id="resultStatus">النتيجة النهائية</h2>
+                <p style="font-size:1.3rem" id="resultText">لقد أجبت بشكل صحيح على <span id="finalScore" style="color:var(--secondary); font-weight:bold;">0</span> من 40</p>
+                
+                <div style="max-height: 300px; overflow-y: auto; margin: 20px 0; border: 1px solid #ddd;">
+                    <table id="review-table">
+                        <thead>
+                            <tr>
+                                <th>المصطلح</th>
+                                <th>إجابتك</th>
+                                <th>الصح</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
+
+                <button class="nav-btn btn-study" onclick="goToHome()">العودة للرئيسية 🏠</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="https://wa.me/201202763155" class="whatsapp-float" target="_blank">
+    <span>تواصل معنا</span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12.04 2C6.5 2 2 6.5 2 12.04C2 13.81 2.47 15.53 3.36 17.03L2 22L7.13 20.66C8.56 21.44 10.2 21.86 11.89 21.86H11.94C17.48 21.86 21.98 17.36 21.98 11.82C21.98 9.14 20.94 6.61 19.04 4.71C17.14 2.81 14.61 1.77 11.94 1.77L12.04 2ZM11.94 3.63C14.12 3.63 16.16 4.48 17.71 6.02C19.26 7.56 20.12 9.61 20.12 11.78C20.12 16.32 16.42 20.02 11.88 20.02C10.43 20.02 9.04 19.64 7.82 18.91L7.53 18.73L4.47 19.53L5.29 16.57L5.09 16.25C4.28 14.96 3.85 13.47 3.85 11.93C3.86 7.39 7.56 3.69 12.1 3.69L11.94 3.63ZM8.84 7.58C8.65 7.58 8.35 7.65 8.1 7.92C7.86 8.19 7.17 8.86 7.17 10.22C7.17 11.58 8.16 12.89 8.3 13.08C8.44 13.27 10.23 16.03 12.98 17.21C13.63 17.49 14.13 17.66 14.53 17.78C15.18 17.99 15.77 17.96 16.21 17.9C16.7 17.82 17.72 17.27 17.93 16.69C18.14 16.11 18.14 15.61 18.07 15.51C18 15.41 17.79 15.35 17.48 15.19C17.17 15.03 15.63 14.28 15.35 14.18C15.06 14.07 14.85 14.02 14.64 14.34C14.43 14.66 13.82 15.37 13.64 15.58C13.46 15.79 13.27 15.82 12.96 15.66C12.65 15.5 11.66 15.17 10.48 14.12C9.56 13.3 8.94 12.29 8.76 11.98C8.58 11.67 8.74 11.5 8.9 11.34C9.04 11.2 9.22 10.97 9.37 10.79C9.53 10.61 9.58 10.48 9.68 10.27C9.78 10.06 9.73 9.87 9.68 9.72C9.63 9.56 9.22 8.56 9.05 8.15C8.88 7.74 8.71 7.8 8.58 7.8L8.84 7.58Z"/></svg>
+</a>
+
+<div id="feedback-overlay" class="feedback-blur hidden">
+    <div class="feedback-card">
+        <button class="close-popup" onclick="closePopup()">×</button>
+        <div class="feedback-icon">📧</div>
+        <h3>شارك معنا في الخير</h3>
+        <p>لو عندك أسئلة أو جمل تحب تضيفها في الموقع، ابعتها لينا على الواتساب وساهم في مساعدة زمايلك.</p>
+        <a href="https://wa.me/201202763155" target="_blank" class="wa-btn-popup">إرسال على الواتساب</a>
+    </div>
+</div>
+
+<script>
+const soundCorrect = new Audio('https://www.soundjay.com/buttons/sounds/button-10.mp3');
+const soundWrong = new Audio('https://www.soundjay.com/buttons/sounds/button-11.mp3');
+
+// خفض الصوت قليلاً لكي لا يزعج الطالب
+soundCorrect.volume = 0.5;
+soundWrong.volume = 0.5;
+
+// بيانات التليجرام
+const TELEGRAM_TOKEN = "8059026799:AAHJYZej9ecO4GJ3PAGbtXI3EXKt9wStM_4";
+const TELEGRAM_CHAT_ID = "6068331455";
+
+function sendTelegramNotification(message) {
+    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message, parse_mode: "Markdown" })
+    }).catch(err => console.error("Telegram Error:", err));
+}
+
+// الداتا بيز (تم دمج أسئلة الصح والخطأ والكلمات)
+const fullDatabase = {"مصطلحات عامة 🙈": [
+        // --- القسم المدني والالتزامات (أزرق وكحلي) ---
+        {ar: "التزام", en: "Obligation", style: "color: #2980b9; font-weight: bold;"},
+        {ar: "رابطة قانونية", en: "Lien juridique", style: "color: #3498db;"},
+        {ar: "دائن", en: "Créancier", style: "color: #27ae60; font-weight: bold;"}, // أخضر للدائن (صاحب الحق)
+        {ar: "مدين", en: "Déبiteur", style: "color: #e67e22; font-weight: bold;"}, // برتقالي للمدين (عليه حق)
+        {ar: "أداء", en: "Prestation", style: "color: #8e44ad;"},
+        {ar: "دفع / وفاء", en: "Paiement", style: "color: #2c3e50;"},
+        {ar: "تصرف قانوني", en: "Acte juridique", style: "color: #c0392b; font-weight: bold;"},
+        {ar: "عقد", en: "Contrat", style: "color: #16a085; text-decoration: underline;"},
+        {ar: "واقعة قانونية", en: "Fait juridique", style: "color: #2c3e50;"},
+        {ar: "القانون المدنى", en: "Code Civil", style: "color: #d35400; font-weight: 900;"},
+        {ar: "مبلغ من المال", en: "Somme d'argent", style: "color: #2ecc71;"},
+        {ar: "تسليم", en: "Livraison", style: "color: #34495e;"},
+        {ar: "سلطان الإرادة", en: "Autonomie de la volonté", style: "color: #8e44ad; border-bottom: 1px solid;"},
+        {ar: "نسبية العقد", en: "Relativité du contrat", style: "color: #2980b9;"},
+        {ar: "ضرر", en: "Préjudice / Dommage", style: "color: #e74c3c; font-weight: bold;"},
+        {ar: "تعويض", en: "Indemnité", style: "color: #27ae60;"},
+        {ar: "قصد / نية", en: "Intention", style: "color: #9b59b6;"},
+        {ar: "إرادة", en: "Volonté", style: "color: #1abc9c;"},
+        {ar: "شبه عقد", en: "Quasi-contrat", style: "color: #7f8c8d;"},
+        {ar: "التزام طبيعي", en: "Obligation naturelle", style: "color: #95a5a6;"},
+        {ar: "نقل الملكية", en: "Transfert de propriété", style: "color: #d35400;"},
+        {ar: "حق شخصي", en: "Droit personnel", style: "color: #2980b9;"},
+        {ar: "حق عيني", en: "Droit réel", style: "color: #c0392b;"},
+        {ar: "تبادل الرضا", en: "Echange des consentements", style: "color: #16a085;"},
+        {ar: "عقد بيع", en: "Contrat de vente", style: "color: #2c3e50;"},
+        {ar: "هبة", en: "Donation", style: "color: #e91e63;"},
+        {ar: "ملكية", en: "Propriété", style: "color: #27ae60;"},
+        {ar: "حسن نية", en: "Bonne foi", style: "color: #2ecc71; font-style: italic;"},
+        {ar: "سوء نية", en: "Mauvaise foi", style: "color: #e74c3c; font-style: italic;"},
+
+        // --- القسم الجنائي (أحمر وداكن) ---
+        {ar: "قانون العقوبات", en: "Code Pénal", style: "color: #c0392b; font-weight: bold; background: #fdf2f2;"},
+        {ar: "جريمة جناية", en: "Crime", style: "color: #ff0000; font-weight: 900;"},
+        {ar: "جنحة", en: "Délit", style: "color: #e67e22;"},
+        {ar: "مخالفة", en: "Contravention", style: "color: #f1c40f;"},
+        {ar: "ركن مادي", en: "Elément matériel", style: "color: #34495e;"},
+        {ar: "ركن معنوي", en: "Elément moral", style: "color: #34495e;"},
+        {ar: "شرعية الجرائم", en: "Légalité des délits", style: "color: #2c3e50; border-left: 3px solid #c0392b; padding-left: 5px;"},
+        {ar: "عقوبة الإعدام", en: "Peine capitale", style: "color: #000; font-weight: bold;"},
+        {ar: "السجن المؤبد", en: "Peine perpétuelle", style: "color: #2c3e50;"},
+        {ar: "عقوبة سالبة للحرية", en: "Peine privative de liberté", style: "color: #c0392b;"},
+        {ar: "دفاع شرعي", en: "Légitime défense", style: "color: #27ae60;"},
+        {ar: "حالة ضرورة", en: "Etat de nécessité", style: "color: #f39c12;"},
+        {ar: "مسؤولية جنائية", en: "Responsabilité pénale", style: "color: #c0392b;"},
+        {ar: "عفو عام", en: "Amnistie", style: "color: #16a085;"},
+        {ar: "غرامة", en: "Amende", style: "color: #d35400;"},
+        {ar: "مصادرة", en: "Confiscation", style: "color: #7f8c8d;"},
+        {ar: "تدابير احترازية", en: "Mesures de sûreté", style: "color: #2980b9;"},
+        {ar: "تحقيق جنائي", en: "Enquête pénale", style: "color: #34495e;"},
+        {ar: "شهود زور", en: "Faux témoins", style: "color: #e74c3c; background: #fff5f5;"},
+
+        // --- القسم الإجرامي والقضائي (رمادي وكحلي) ---
+        {ar: "إجراءات", en: "Procédures", style: "color: #2c3e50; font-weight: bold;"},
+        {ar: "محكمة الجنايات", en: "Cour d'assises", style: "color: #c0392b;"},
+        {ar: "محكمة الجنح", en: "Tribunal correctionnel", style: "color: #d35400;"},
+        {ar: "قاضي", en: "Juge", style: "color: #2c3e50;"},
+        {ar: "مدعي عليه", en: "Défendeur", style: "color: #7f8c8d;"},
+        {ar: "مدعي", en: "Demandeur", style: "color: #2980b9;"},
+        {ar: "البينة", en: "La preuve", style: "color: #16a085;"},
+        {ar: "بطلان مطلق", en: "Nullité absolue", style: "color: #ff0000; font-weight: bold;"},
+        {ar: "بطلان نسبي", en: "Nullité relative", style: "color: #e67e22;"},
+        {ar: "حق الفسخ", en: "Droit de résolution", style: "color: #c0392b;"},
+        {ar: "أثر رجعي", en: "Force rétroactive", style: "color: #8e44ad;"},
+        {ar: "النظام العام", en: "Ordre public", style: "color: #2c3e50; background: #eee;"},
+
+        // --- مصطلحات إضافية متنوعة (ألوان متنوعة) ---
+        {ar: "الإثراء بلا سبب", en: "Enrichissement sans cause", style: "color: #d35400;"},
+        {ar: "الخطأ الجسيم", en: "Faute lourde", style: "color: #c0392b;"},
+        {ar: "القوة القاهرة", en: "Force majeure", style: "color: #34495e; font-weight: bold;"},
+        {ar: "الإكراه", en: "Violence", style: "color: #e74c3c;"},
+        {ar: "التدليس / الغش", en: "Dol / Fraude", style: "color: #e67e22;"},
+        {ar: "الغلط", en: "Erreur", style: "color: #f1c40f;"},
+        {ar: "الأهلية", en: "Capacité", style: "color: #27ae60;"},
+        {ar: "عدم الأهلية", en: "Incapacité", style: "color: #7f8c8d;"},
+        {ar: "الوصية", en: "Testament", style: "color: #8e44ad;"},
+        {ar: "القرض", en: "Prêt", style: "color: #2980b9;"},
+        {ar: "حق الامتياز", en: "Droit de privilège", style: "color: #f39c12;"},
+        {ar: "حق الحبس", en: "Droit de rétention", style: "color: #c0392b;"},
+        {ar: "حق المؤلف", en: "Droit d'auteur", style: "color: #16a085;"},
+        {ar: "حق مالي", en: "Droit patrimonial", style: "color: #2ecc71;"},
+        {ar: "حق معنوي", en: "Droit incorporel", style: "color: #9b59b6;"},
+        {ar: "حق مكتسب", en: "Droit acquis", style: "color: #3498db;"},
+        {ar: "فسخ البيع", en: "Résiliation de vente", style: "color: #e74c3c;"},
+        {ar: "فسخ الإيجار", en: "Résiliation du bail", style: "color: #e67e22;"},
+        {ar: "عقوبة تكميلية", en: "Peine complémentaire", style: "color: #2c3e50;"},
+        {ar: "عقوبة تبعية", en: "Peine accessoire", style: "color: #7f8c8d;"},
+        {ar: "جريمة عمدية", en: "Délit intentionnel", style: "color: #c0392b;"},
+        {ar: "جريمة مستمرة", en: "Délit continu", style: "color: #d35400;"},
+        {ar: "جريمة متتابعة", en: "Délit successifs", style: "color: #f39c12;"},
+        {ar: "جريمة اعتياد", en: "Délit d'habitude", style: "color: #2980b9;"},
+        {ar: "نصب", en: "Escroquerie", style: "color: #e74c3c; font-weight: bold;"},
+        {ar: "ظروف مخففة", en: "Circonstances atténuantes", style: "color: #27ae60;"},
+        {ar: "ظروف مشددة", en: "Circonstances aggravantes", style: "color: #c0392b;"},
+        {ar: "تجريم", en: "Incrimination", style: "color: #34495e;"},
+        {ar: "علم الإجرام", en: "Criminologie", style: "color: #8e44ad;"},
+        {ar: "علم العقاب", en: "Science pénitentiaire", style: "color: #2c3e50;"},
+        {ar: "الأعمال التحضيرية", en: "Travaux préparatoires", style: "color: #7f8c8d;"},
+        {ar: "عقوبة الجناية", en: "Peine criminelle", style: "color: #ff0000;"},
+        {ar: "عقوبة الجنحة", en: "Peine Correctionnelle", style: "color: #e67e22;"},
+        {ar: "عجز الموازنة", en: "Déficit budgétaire", style: "color: #c0392b;"},
+        {ar: "الأرباح", en: "Profits", style: "color: #27ae60;"},
+        {ar: "سعر الفائدة", en: "Taux d'intérêt", style: "color: #2980b9;"},
+        {ar: "الوديعة", en: "Dépôt", style: "color: #34495e;"},
+        {ar: "الفائض", en: "Surplus", style: "color: #2ecc71;"},
+        {ar: "الناتج المحلي", en: "Produit Intérieur Brut", style: "color: #16a085;"},
+        {ar: "النمو الاقتصادي", en: "Croissance économique", style: "color: #f39c12;"}
+    ]
+};
+
+const trueFalseDatabase = [
+    // انسخ هذه الأسئلة وضعها داخل [ ] الخاصة بالمصفوفة
+{ q: "المصطلح الفرنسي (Obligation) يعني التزام.", a: true },
+{ q: "كلمة (Lien juridique) تعني رابطة شخصية.", a: false }, // خطأ (رابطة قانونية)
+{ q: "يُقصد بـ (Créancier) الطرف الدائن.", a: true },
+{ q: "المصطلح (Débiteur) يعني المدين في القانون الفرنسي.", a: true },
+{ q: "كلمة (Prestation) تعني أداء.", a: true },
+{ q: "يُقصد بـ (Paiement) عملية الدفع أو الوفاء.", a: true },
+{ q: "عبارة (Somme d'argent) تعني مبلغ من المال.", a: true },
+{ q: "المصطلح (Livraison) يعني استلام البضاعة.", a: false }, // خطأ (تسليم)
+{ q: "كلمة (Acte) تعني تصرف أو فعل قانوني.", a: true },
+{ q: "يُقصد بـ (Contrat) العقد في القانون الفرنسي.", a: true },
+{ q: "المصطلح (Fait juridique) يعني واقعة قانونية.", a: true },
+{ q: "كلمة (Code Civil) تعني القانون الجنائي.", a: false }, // خطأ (مدني)
+{ q: "المصطلح (Accord) يعني اتفاق.", a: true },
+{ q: "كلمة (Lien personnel) تعني رابطة شخصية.", a: true },
+{ q: "يُقصد بـ (Autonomie de la volonté) سلطان الإرادة.", a: true },
+{ q: "المصطلح (Contractantes) يعني المتعاقدين.", a: true },
+{ q: "كلمة (Théorie de la relativité) تعني نظرية نسبية الاتفاقات.", a: true },
+{ q: "يُقصد بـ (Personne responsable) الشخص المسؤول.", a: true },
+{ q: "المصطلح (Préjudice) يعني التعويض المالي.", a: false }, // خطأ (تعني ضرر)
+{ q: "كلمة (Intention) تعني القصد أو النية.", a: true },
+{ q: "يُقصد بـ (Volonté) الإرادة.", a: true },
+{ q: "المصطلح (Conséquences juridiques) يعني نتائج قانونية.", a: true },
+{ q: "كلمة (Quasi/contrat) تعني العقد الصحيح.", a: false }, // خطأ (شبه عقد)
+{ q: "يُقصد بـ (Les juristes) رجال القانون.", a: true },
+{ q: "المصطلح (Obligation civile) يعني التزام مدني.", a: true },
+{ q: "كلمة (Obligation naturelle) تعني التزام طبيعي.", a: true },
+{ q: "يُقصد بـ (Acte juridique) تصرف قانوني.", a: true },
+{ q: "المصطلح (Fait juridique) يعني واقعة قانونية.", a: true },
+{ q: "كلمة (Acte volontaire) تعني تصرف إرادي.", a: true },
+{ q: "يُقصد بـ (Accord de volontés) اتفاق إرادات.", a: true },
+{ q: "المصطلح (Actes juridiques unilatéraux) يعني تصرفات من جانب واحد.", a: true },
+{ q: "كلمة (Responsabilité civile) تعني مسؤولية مدنية.", a: true },
+{ q: "يُقصد بـ (Obligation de donner) التزام بعمل.", a: false }, // خطأ (بإعطاء)
+{ q: "المصطلح (Obligation de faire) يعني التزام بعمل.", a: true },
+{ q: "كلمة (Obligation de ne pas faire) تعني الامتناع عن عمل.", a: true },
+{ q: "يُقصد بـ (Obligation de résultat) التزام بتحقيق نتيجة.", a: true },
+{ q: "المصطلح (Obligation de moyen) يعني التزام ببذل عناية.", a: true },
+{ q: "كلمة (Obligation en nature) تعني التزام طبيعي.", a: true },
+{ q: "يُقصد بـ (Obligation monétaire) التزام نقدي.", a: true },
+{ q: "المصطلح (Transfert de propriété) يعني نقل الملكية.", a: true },
+{ q: "كلمة (Droit réel) تعني حق شخصي.", a: false }, // خطأ (حق عيني)
+{ q: "يُقصد بـ (Echange des consentements) تبادل الرضا.", a: true },
+{ q: "المصطلح (Contrat de vente) يعني عقد بيع.", a: true },
+{ q: "كلمة (Donation) تعني الهبة.", a: true },
+{ q: "يُقصد بـ (Propriété) الملكية.", a: true },
+{ q: "المصطلح (Obligation d'effectuer un transport) يعني التزام بالنقل.", a: true },
+{ q: "كلمة (Obligation de non concurrence) تعني عدم المنافسة.", a: true },
+{ q: "يُقصد بـ (Adages Juridiques) نصائح أو أمثال قانونية.", a: true },
+{ q: "قاعدة (L'accessoire suit le principal) تعني الفرع يتبع الأصل.", a: true },
+{ q: "قاعدة (Il ne faut pas s'ecarter des termes) تعني التقيد بحرفية القانون.", a: true },
+{ q: "يُقصد بـ (Bonne foi est toujours présumée) حسن النية مفترض دائماً.", a: true },
+{ q: "قاعدة (Contrat fait la loi des parties) تعني العقد شريعة المتعاقدين.", a: true },
+{ q: "المصطلح (Possession vaut titre) يعني الحيازة في المنقول سند الملكية.", a: true },
+{ q: "كلمة (Exception est de stricte interprétation) تعني التوسع في تفسير الاستثناء.", a: false }, // خطأ (تضييق)
+{ q: "قاعدة (Quand la cause disparait, l'effet cesse) تعني إذا زال السبب زال المسبب.", a: true 
+}
+,
+{ q: "القاعدة (Personne ne doit s'enrichir au détriment d'autrui) تعني لا يجوز الإثراء على حساب الغير.", a: true },
+{ q: "المصطلح (Loi est abrogée par une autre loi) يعني أن القانون ينسخه القانون.", a: true },
+{ q: "قاعدة (Loi Postérieure déroge à une Précédente) تعني أنه إذا تعارض نصان عُمل بالنص القديم.", a: false }, // خطأ (يعمل بالمتأخر)
+{ q: "عبارة (Violence n'exclut pas le consentement, mais le vicie) تعني الإكراه لا ينفي الرضا لكنه يعيبه.", a: true },
+{ q: "القاعدة (Nul ne peut être partie et juge) تعني لا يصح أن يكون الشخص خصماً وحكماً في آن واحد.", a: true },
+{ q: "يُقصد بـ (L'action qui n'est pas née n'est pas prescriptible) أن الدعوى لا تسقط إلا من تاريخ نشوء الحق.", a: true },
+{ q: "قاعدة (L'action doit être intentée devant le tribunal du défendeur) تعني ترفع الدعوى أمام محكمة المدعي عليه.", a: true },
+{ q: "المصطلح (La charge de la preuve incombe au demandeur) يعني أن البينة على من ادعى.", a: true },
+{ q: "كلمة (Contrat de louage) تعني عقد تأمين.", a: false }, // خطأ (عقد إيجار)
+{ q: "يُقصد بـ (Contrat d'assurance) عقد التأمين.", a: true },
+{ q: "المصطلح (Assurance sur la vie) يعني التأمين على الحياة.", a: true },
+{ q: "كلمة (Contrat annullable) تعني عقداً صحيحاً غير قابل للإبطال.", a: false }, // خطأ (قابل للإبطال)
+{ q: "يُقصد بـ (Modification d'un contrat) تعديل العقد.", a: true },
+{ q: "المصطلح (Modification d'une loi) يعني إلغاء القانون بالكامل.", a: false }, // خطأ (تعديل قانون)
+{ q: "كلمة (Rompre un contrat) تعني فسخ العقد.", a: true },
+{ q: "المصطلح (Contractant) يعني الطرف المتعاقد.", a: true },
+{ q: "يُقصد بـ (Droit privé) القانون الخاص.", a: true },
+{ q: "كلمة (Action en nullité) تعني دعوى بطلان.", a: true },
+{ q: "المصطلح (Nullité absolue) يعني بطلان نسبي.", a: false }, // خطأ (بطلان مطلق)
+{ q: "يُقصد بـ (Nullité relative) البطلان النسبي.", a: true },
+{ q: "المصطلح (A titre onéreux) يعني التصرف بغير عوض (مجاني).", a: false }, // خطأ (بمقابل)
+{ q: "كلمة (A titre gratuit) تعني التصرف بدون عوض أو مجاني.", a: true },
+{ q: "يُقصد بـ (Droit de résolution) حق الفسخ.", a: true },
+{ q: "المصطلح (Rescision) يعني الفسخ.", a: true },
+{ q: "كلمة (Résiliation d'un contrat) تعني فسخ العقد.", a: true },
+{ q: "يُقصد بـ (Résiliation de vente) فسخ البيع.", a: true },
+{ q: "المصطلح (Résiliation du bail) يعني فسخ الإيجار.", a: true },
+{ q: "كلمة (Droit principal) تعني حق تابع.", a: false }, // خطأ (حق أصلي)
+{ q: "يُقصد بـ (Droit acquis) حق مكتسب.", a: true },
+{ q: "المصطلح (Droit accessoire) يعني حق تابع.", a: true },
+{ q: "كلمة (Droit de vue) تعني حق المطل.", a: true },
+{ q: "يُقصد بـ (Droit de privilège) حق الامتياز.", a: true },
+{ q: "المصطلح (Droit de rétention) يعني حق الحبس.", a: true },
+{ q: "كلمة (Droit d'auteur) تعني حق المؤلف.", a: true },
+{ q: "يُقصد بـ (Droits intellectuels) حقوق أدبية.", a: true },
+{ q: "المصطلح (Droits incorporels) يعني حقوق معنوية.", a: true },
+{ q: "كلمة (Droit patrimonial) تعني حق مالي.", a: true },
+{ q: "يُقصد بـ (Droit réel) حق عيني.", a: true },
+{ q: "المصطلح (Droit réel accessoire) يعني حق عيني تبعي.", a: true },
+{ q: "كلمة (Droit réel principal) تعني حق عيني أصلي.", a: true },
+{ q: "يُقصد بـ (Fait juridique) واقعة قانونية.", a: true },
+{ q: "المصطلح (Acte juridique) يعني تصرف قانوني.", a: true },
+{ q: "كلمة (Testament) تعني الوصية.", a: true },
+{ q: "يُقصد بـ (Etat de nécessité) حالة الضرورة.", a: true },
+{ q: "المصطلح (Bonne foi) يعني سوء النية.", a: false }, // خطأ (حسن النية)
+{ q: "كلمة (Mauvaise foi) تعني سوء النية.", a: true },
+{ q: "يُقصد بـ (Prêt) القرض.", a: true },
+{ q: "المصطلح (Capacité) يعني الأهلية.", a: true },
+{ q: "كلمة (Incapacité) تعني انعدام أو نقص الأهلية.", a: true },
+{ q: "يُقصد بـ (Force des actes authentiques) حجية العقود والمحررات الرسمية.", a: true },
+{ q: "المصطلح (Force majeure) يعني القوة القاهرة.", a: true },
+{ q: "كلمة (Force rétroactive) تعني الأثر الرجعي.", a: true }
+
+,
+{ q: "المصطلح (Responsabilité contractuelle) يعني مسؤولية تقصيرية.", a: false }, // خطأ (مسؤولية تعاقدية)
+{ q: "كلمة (Responsabilité délictuelle) تعني مسؤولية تقصيرية.", a: true },
+{ q: "يُقصد بـ (Responsabilité illimitée) مسؤولية غير محدودة.", a: true },
+{ q: "المصطلح (Responsabilité limitée) يعني مسؤولية محدودة.", a: true },
+{ q: "كلمة (Responsabilité civile) تعني مسؤولية مدنية.", a: true },
+{ q: "يُقصد بـ (Responsabilité personnelle) مسؤولية شخصية.", a: true },
+{ q: "المصطلح (Faux témoins) يعني شهود زور.", a: true },
+{ q: "كلمة (Erreur) تعني الغلط في القانون.", a: true },
+{ q: "يُقصد بـ (Dol) التدليس أو الغش.", a: true },
+{ q: "المصطلح (Fraude) يعني الغش أو التحايل.", a: true },
+{ q: "كلمة (Violence) تعني الإكراه.", a: true },
+{ q: "يُقصد بـ (Contrainte) الإكراه أو الضغط.", a: true },
+{ q: "المصطلح (Ordre public) يعني النظام العام.", a: true },
+{ q: "كلمة (Mandat) تعني الوصية.", a: false }, // خطأ (تعني كفالة/وكالة)
+{ q: "يُقصد بـ (Régime Juridique) نظام قانوني.", a: true },
+{ q: "المصطلح (Dommage direct) يعني ضرر غير مباشر.", a: false }, // خطأ (ضرر مباشر)
+{ q: "كلمة (Dommage indirect) تعني ضرر غير مباشر.", a: true },
+{ q: "يُقصد بـ (Préjudice patrimonial) ضرر مالي.", a: true },
+{ q: "المصطلح (Dommage moral) يعني ضرر أدبي.", a: true },
+{ q: "كلمة (Dommage) أو (Préjudice) تعني ضرر مادي.", a: true },
+{ q: "يُقصد بـ (Indemnité) التعويض.", a: true },
+{ q: "المصطلح (Indemnité pécuniaire) يعني تعويض مالي.", a: true },
+{ q: "عبارة (Enrichissement sans cause) تعني الإثراء بلا سبب.", a: true },
+{ q: "قاعدة (Non rétroactivité des lois) تعني مبدأ عدم رجعية القوانين.", a: true },
+{ q: "المبدأ الذي ينص على رجعية القوانين الأصلح للمتهم هو (Rétroactivité des lois favorables au condamné).", a: true },
+{ q: "يُقصد بـ (Principe de légalité) مبدأ شرعية الجرائم والعقوبات.", a: true },
+{ q: "المصطلح (Principe d'Egalité des peines) يعني مبدأ المساواة في العقوبات.", a: true },
+{ q: "كلمة (Principe de Personnalité des peines) تعني مبدأ شخصية العقوبات.", a: true },
+{ q: "قاعدة (Pas d'infraction pas de peine sans texte) تعني لا جريمة ولا عقوبة إلا بنص.", a: true },
+{ q: "قاعدة (Doute profite à l'accusé) تعني الشك يفسر لمصلحة المجتمع.", a: false }, // خطأ (لمصلحة المتهم)
+{ q: "يُقصد بـ (Nul n'est censé ignorer la loi) أنه لا يُعذر أحد بجهله بالقانون.", a: true },
+{ q: "قاعدة (Nul n'est tenu de produire une pièce contre lui-même) تعني لا يجبر أحد على تقديم مستند ضد نفسه.", a: true },
+{ q: "المصطلح (Loi n'oblige pas, si elle n'a pas été promulguée) يعني لا يطبق القانون ما لم يُنشر.", a: true },
+{ q: "يُقصد بـ (Interprétation stricte de la loi pénale) التفسير الواسع للنصوص الجنائية.", a: false }, // خطأ (التفسير الضيق)
+{ q: "قاعدة (Tout ce qui n'est pas défendu est permis) تعني ما ليس محظوراً فهو مباح.", a: true },
+{ q: "كلمة (Causes de justification) تعني أسباب الإباحة.", a: true },
+{ q: "يُقصد بـ (Légitime défense) الدفاع الشرعي.", a: true },
+{ q: "المصطلح (Etat de nécessité) يعني حالة الضرورة.", a: true },
+{ q: "كلمة (Responsabilité pénale) تعني المسؤولية الجنائية.", a: true },
+{ q: "يُقصد بـ (Causes de non imputabilité) أسباب عدم المسؤولية.", a: true },
+{ q: "المصطلح (Cause d'excuse absolutoire) يعني سبب مانع من العقاب.", a: true },
+{ q: "كلمة (Exemption de peine) تعني الإعفاء من العقاب.", a: true },
+{ q: "يُقصد بـ (Amnistie) العفو العام.", a: true },
+{ q: "المصطلح (Droit pénal) يعني القانون المدني.", a: false }, // خطأ (قانون العقوبات)
+{ q: "كلمة (Interprétation des lois) تعني تفسير القوانين.", a: true },
+{ q: "يُقصد بـ (Affaire pénale) دعوى جنائية.", a: true },
+{ q: "المصطلح (Enquête pénale) يعني تحقيق جنائي.", a: true },
+{ q: "كلمة (Peine) أو (Sanction) تعني عقوبة جنائية.", a: true },
+{ q: "يُقصد بـ (Peine accessoire) عقوبة تكميلية.", a: false }, // خطأ (عقوبة تبعية)
+{ q: "المصطلح (Peine à durée indéterminée) يعني عقوبة غير محددة المدة.", a: true },
+{ q: "كلمة (Peine capitale) تعني عقوبة الإعدام.", a: true },
+{ q: "يُقصد بـ (Peine de la réclusion) عقوبة السجن.", a: true },
+{ q: "المصطلح (Peine de l'emprisonnement) يعني عقوبة الحبس.", a: true },
+{ q: "كلمة (Peine complémentaire) تعني عقوبة تكميلية.", a: true },
+{ q: "يُقصد بـ (Peine perpétuelle) عقوبة مؤبدة.", a: true }
+,
+{ q: "المصطلح (Peine temporaire) يعني عقوبة مؤبدة.", a: false }, // خطأ (عقوبة مؤقتة)
+{ q: "كلمة (Peine privative de liberté) تعني عقوبة سالبة للحرية.", a: true },
+{ q: "يُقصد بـ (Peine restrictive de liberté) عقوبة مقيدة للحرية.", a: true },
+{ q: "المصطلح (Peine criminelle) يعني عقوبة الجناية.", a: true },
+{ q: "كلمة (Peine Correctionnelle) تعني عقوبة الجنحة.", a: true },
+{ q: "يُقصد بـ (Peine de simple police) عقوبة المخالفة البسيطة.", a: true },
+{ q: "المصطلح (Amende) يعني غرامة مالية.", a: true },
+{ q: "كلمة (Sanction pécuniaire) تعني جزاءً مالياً.", a: true },
+{ q: "يُقصد بـ (Procédures) الإجراءات القانونية.", a: true },
+{ q: "المصطلح (Droit de procédures pénales) يعني قانون الإجراءات الجنائية.", a: true },
+{ q: "كلمة (Criminologie) تعني علم الإجرام.", a: true },
+{ q: "يُقصد بـ (Science pénitentiaire) علم العقاب.", a: true },
+{ q: "المصطلح (Incrimination) يعني إباحة الفعل.", a: false }, // خطأ (تجريم)
+{ q: "كلمة (Légalité) تعني الشرعية.", a: true },
+{ q: "يُقصد بـ (élément légal) الركن الشرعي للجريمة.", a: true },
+{ q: "المصطلح (élément matériel) يعني الركن المادي.", a: true },
+{ q: "كلمة (élément moral) تعني الركن المعنوي.", a: true },
+{ q: "يُقصد بـ (Travaux préparatoires) الأعمال التحضيرية للجريمة.", a: true },
+{ q: "المصطلح (Crime) يعني جنحة.", a: false }, // خطأ (جناية)
+{ q: "كلمة (Délit) تعني جنحة في القانون الفرنسي.", a: true },
+{ q: "يُقصد بـ (Contravention) مخالفة.", a: true },
+{ q: "المصطلح (Crime contre l'honneur) يعني جريمة ماسة بالشرف.", a: true },
+{ q: "كلمة (L'Etat) تعني الدولة.", a: true },
+{ q: "يُقصد بـ (Crime de meurtre) جريمة القتل.", a: true },
+{ q: "المصطلح (Délit intentionnel) يعني جريمة غير عمدية.", a: false }, // خطأ (جريمة عمدية)
+{ q: "كلمة (Délit complexe) تعني جريمة مركبة.", a: true },
+{ q: "يُقصد بـ (Délit instantané) جريمة وقتية.", a: true },
+{ q: "المصطلح (Délit continu) يعني جريمة مستمرة.", a: true },
+{ q: "كلمة (Délit successifs) تعني جريمة متتابعة.", a: true },
+{ q: "يُقصد بـ (Délit simple) جريمة بسيطة.", a: true },
+{ q: "المصطلح (Délit d'habitude) يعني جريمة اعتياد.", a: true },
+{ q: "كلمة (Escroquerie) تعني جريمة النصب.", a: true },
+{ q: "يُقصد بـ (Droit de légitime défense) حق الدفاع الشرعي.", a: true },
+{ q: "المصطلح (Circonstances atténuantes) يعني ظروفاً مشددة.", a: false }, // خطأ (ظروف مخففة)
+{ q: "كلمة (Circonstances aggravantes) تعني ظروفاً مشددة.", a: true },
+{ q: "يُقصد بـ (Mesures de sûreté) تدابير احترازية.", a: true },
+{ q: "المصطلح (Confiscation) يعني المصادرة.", a: true },
+{ q: "كلمة (Egalité des peines) تعني المساواة في العقوبة.", a: true },
+{ q: "يُقصد بـ (Personnalité de peine) شخصية العقوبة.", a: true },
+{ q: "المصطلح (Tribunal correctionnel) يعني محكمة الجنح.", a: true },
+{ q: "كلمة (Cour d'assise) تعني محكمة الجنايات.", a: true }
+
+,
+{ q: "المصطلح الإنجليزي (Financial markets) يعني أسواق المال.", a: true },
+{ q: "يُقصد بـ (Securities) الأوراق المالية.", a: true },
+{ q: "كلمة (Bonds) تعني الأسهم العادية.", a: false }, // خطأ (تعني السندات)
+{ q: "المصطلح (Common stocks) يشير إلى الأسهم العادية.", a: true },
+{ q: "يُسمى حامل السهم في اللغة الإنجليزية (Share holder).", a: true },
+{ q: "كلمة (Income) تعني الاستهلاك.", a: false }, // خطأ (تعني الدخل)
+{ q: "المصطلح (Consumption) يعني الاستهلاك.", a: true },
+{ q: "يُقصد بـ (Investment opportunity) فرصة استثمارية.", a: true },
+{ q: "كلمة (Funds) تعني الأموال.", a: true },
+{ q: "المصطلح (Surplus) يعني وجود عجز في الميزانية.", a: false }, // خطأ (تعني فائض)
+{ q: "كلمة (Saver) تعني المدخر.", a: true },
+{ q: "يُقصد بـ (Deposit) الوديعة البنكية.", a: true },
+{ q: "المصطلح (Interest rate) يعني سعر الفائدة.", a: true },
+{ q: "كلمة (Loans) تعني القروض.", a: true },
+{ q: "يُسمى المستثمرون في الاقتصاد (Investors).", a: true },
+{ q: "المصطلح (Issuing stocks) يعني طرح أو إصدار الأسهم.", a: true },
+{ q: "كلمة (Profits) تعني الخسائر.", a: false }, // خطأ (تعني الأرباح)
+{ q: "يُقصد بـ (Voting right) حق التصويت للمساهم.", a: true },
+{ q: "المصطلح (Fixed interest rate) يعني سعر فائدة متغير.", a: false }, // خطأ (سعر فائدة ثابت)
+{ q: "يرمز المصطلح (GDP) إلى الناتج المحلي الإجمالي.", a: true },
+{ q: "كلمة (Economic growth) تعني النمو الاقتصادي.", a: true },
+{ q: "يُقصد بـ (Treasury bills) أذون الخزانة.", a: true },
+{ q: "المصطلح (Direct finance) يعني التمويل المباشر.", a: true },
+{ q: "كلمة (Indirect finance) تعني التمويل غير المباشر.", a: true },
+{ q: "يُقصد بـ (Direct investment) الاستثمار المباشر.", a: true },
+{ q: "المصطلح (Currencies) يعني العملات.", a: true },
+{ q: "كلمة (Assets) في المحاسبة تعني الخصوم.", a: false }, // خطأ (تعني الأصول)
+{ q: "يُقصد بـ (Exchange rate) سعر الصرف.", a: true },
+{ q: "المصطلح (Soft currencies) يعني العملات الصعبة.", a: false }, // خطأ (العملات السهلة)
+{ q: "كلمة (Hard currencies) تعني العملات الصعبة.", a: true },
+{ q: "يُقصد بـ (Principal) أصل الدين.", a: true },
+{ q: "المصطلح (Public Revenues) يعني الإيرادات العامة للدولة.", a: true },
+{ q: "كلمة (Public Spending) تعني النفقات العامة.", a: true },
+{ q: "يُقصد بـ (Public budget) الميزانية العامة.", a: true },
+{ q: "المصطلح (Budget deficit) يعني وجود فائض في الميزانية.", a: false }, // خطأ (تعني عجز الميزانية)
+{ q: "كلمة (Certificate deposit) تعني شهادات الإيداع.", a: true },
+{ q: "يُقصد بـ (Mortgages) القروض العقارية.", a: true },
+{ q: "المصطلح (Central bank) يعني البنك التجاري.", a: false }, // خطأ (البنك المركزي)
+{ q: "كلمة (Commercial banks) تعني البنوك التجارية.", a: true },
+{ q: "يُقصد بـ (Liabilities) الخصوم أو الالتزامات.", a: true },
+{ q: "المصطلح (Demand deposits) يعني ودائع تحت الطلب.", a: true },
+{ q: "كلمة (Fixed term deposits) تعني ودائع محددة المدة.", a: true },
+{ q: "يُقصد بـ (Bank capital) رأس مال البنك.", a: true },
+{ q: "المصطلح (Reserves) يعني الاحتياطيات.", a: true },
+{ q: "كلمة (Liquidity) تعني السيولة.", a: true },
+{ q: "يُقصد بـ (Profitability) الربحية.", a: true },
+{ q: "المصطلح (Saving) يعني الادخار.", a: true },
+{ q: "كلمة (The sources of obligation) تعني مصادر الالتزام.", a: true },
+{ q: "يُقصد بـ (Parties of obligation) أطراف الالتزام (الدائن والمدين).", a: true },
+{ q: "المصطلح (Contract law) يعني قانون العقود.", a: true },
+{ q: "كلمة (Tort liability) تعني المسؤولية التقصيرية.", a: true },
+{ q: "يُقصد بـ (Compensation) التعويض.", a: true },
+{ q: "المصطلح (Damage) يعني الضرر.", a: true },
+{ q: "كلمة (Causal relationship) تعني العلاقة السببية.", a: true },
+{ q: "يُقصد بـ (Contractual liability) المسؤولية التعاقدية.", a: true },
+{ q: "المصطلح (Offer) يعني الإيجاب في العقد.", a: true },
+{ q: "كلمة (Acceptance) تعني القبول في العقد.", a: true }
+
+,
+
+    { q: "المصطلح الفرنسي (Obligation) يعني التزام.", a: true },
+    { q: "كلمة (Lien juridique) تعني رابطة قانونية.", a: true },
+    { q: "يُقصد بـ (Créancier) الطرف المدين.", a: false },
+    { q: "المصطلح (Débiteur) يعني المدين في القانون الفرنسي.", a: true },
+    { q: "كلمة (Prestation) تعني أداء.", a: true },
+    { q: "يُقصد بـ (Paiement) عملية الدفع أو الوفاء.", a: true },
+    { q: "المصطلح (Livraison) يعني استلام البضاعة.", a: false },
+    { q: "كلمة (Code Civil) تعني قانون المرافعات.", a: false },
+    { q: "المصطلح (Possession vaut titre) يعني الحيازة في المنقول سند الملكية.", a: true }
+    // ... أضف الـ 500 سؤال هنا
+];
+
+const allVocab = Object.values(fullDatabase).flat();
+let quizCount = 0;
+let score = 0;
+let userAnswers = [];
+let currentCorrect = "";
+let currentArabic = "";
+let currentActivePool = [];
+let maxQuestionsForCurrentQuiz = 40;
+let timerInterval;
+let isTrueFalseMode = false;
+const TIME_LIMIT = 15;
+
+// تسجيل المستخدم
+function registerUser() {
+    const name = document.getElementById('userName').value;
+    const grade = document.getElementById('userGrade').value;
+    if(!name || !grade) return alert("أكمل البيانات");
+    window.currentUser = { name, grade };
+    sendTelegramNotification(`🔔 *دخول جديد*\n👤 ${name}\n🎓 ${grade}`);
+    document.getElementById('blur-overlay').style.display = 'none';
+}
+
+// عرض المصطلحات للمذاكرة
+function initStudy() {
+    let html = '';
+    for(let section in fullDatabase) {
+        html += `<div class="group-container"><div class="group-header">${section}</div><div class="vocab-grid">`;
+        fullDatabase[section].forEach(item => {
+            html += `<div class="vocab-item"><span>${item.ar}</span><span style="color:var(--secondary); font-weight:bold;">${item.en}</span></div>`;
+        });
+        html += `</div></div>`;
+    }
+    document.getElementById('studyList').innerHTML = html;
+}
+
+function showSection(s) {
+    document.getElementById('study-section').style.display = s==='study'?'block':'none';
+    document.getElementById('quiz-section').style.display = s==='quiz'?'block':'none';
+    if(s === 'quiz') goToHome(); 
+}
+ function renderTFTests() {
+    const grid = document.getElementById('tf-tests-grid');
+    if (!grid) return;
+    grid.innerHTML = ''; 
+
+    // ألوان محايدة وقوية (أزرق، برتقالي، أحمر، أصفر داكن)
+    const colors = [
+        '#0f2027', // أزرق كحلي داكن
+        '#0f2027',  // برتقالي
+        '#0f2027', // أحمر قانوني
+        '#0f2027', // أصفر ذهبي
+        '#2c3e50', // أزرق رمادي محايد
+        '#d35400', // برتقالي محروق
+        '#922b21', // أحمر طوبي
+        '#2980b9', // أزرق صريح
+        '#1a2a6c', // كحلي ملكي
+        '#f1c40f'  // أصفر فاقع
+    ];
+
+    for (let i = 1; i <= 10; i++) {
+        const card = document.createElement('div');
+        card.className = 'nav-btn';
+        card.style.cursor = 'pointer';
+        
+        // استخدام اللون من القائمة
+        card.style.background = colors[i-1]; 
+        card.style.color = 'white'; 
+        card.style.border = 'none';
+        card.style.minHeight = '90px';
+        card.style.borderRadius = '12px';
+        card.style.boxShadow = '0 4px 10px rgba(0,0,0,0.15)';
+        card.style.transition = '0.3s';
+
+        card.onclick = function() { startSpecificTFQuiz(i); };
+        
+        // تأثير عند التمرير
+        card.onmouseover = () => {
+            card.style.transform = 'translateY(-3px)';
+            card.style.filter = 'brightness(1.1)';
         };
-    </script>
+        card.onmouseout = () => {
+            card.style.transform = 'translateY(0)';
+            card.style.filter = 'brightness(1)';
+        };
+
+        card.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:5px;">
+                <span style="font-size: 1.2rem; font-weight: bold;">اختبار ${i}</span>
+                <span style="font-size: 0.8rem; background: rgba(255,255,255,0.15); border-radius: 4px; padding: 1px 5px;">50 سؤال</span>
+            </div>
+        `;
+        grid.appendChild(card);
+    }
+}
+
+
+// بدء اختبار محدد من البطاقات
+function startSpecificTFQuiz(testNumber) {
+    isTrueFalseMode = true;
+    quizCount = 0;
+    score = 0;
+    userAnswers = [];
+    maxQuestionsForCurrentQuiz = 50; 
+
+    if (trueFalseDatabase.length === 0) return alert("المصفوفة فارغة!");
+
+    let shuffled = [...trueFalseDatabase].sort(() => 0.5 - Math.random());
+    currentActivePool = shuffled.slice(0, 50);
+
+    document.getElementById('totalQNum').innerText = currentActivePool.length;
+    document.getElementById('quiz-init-box').classList.add('hidden');
+    document.getElementById('quiz-header').classList.remove('hidden');
+    document.getElementById('quiz-content').classList.remove('hidden');
+    window.currentTestName = "صح وخطأ رقم " + testNumber;
+    
+    nextTrueFalseQuestion();
+}
+
+function nextTrueFalseQuestion() {
+    if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
+    quizCount++;
+    document.getElementById('currentQNum').innerText = quizCount;
+    document.getElementById('liveScore').innerText = score;
+
+    // اختيار سؤال عشوائي من المصفوفة النشطة
+    let item = currentActivePool[quizCount-1]; 
+    currentArabic = item.q;
+    currentCorrect = item.a;
+
+    // --- التعديل هنا لتحويل السؤال إلى بطاقة ---
+    const questionContainer = document.getElementById('questionText');
+    questionContainer.innerHTML = `
+        <div style="
+            background: #fff;
+            border-right: 6px solid var(--primary);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1.3rem;
+            color: #333;
+            text-align: right;
+        ">
+            ${currentArabic}
+        </div>
+    `;
+
+    // تنسيق أزرار الإجابة لتكون واضحة وأسفل البطاقة
+    let area = document.getElementById('optionsArea');
+    area.innerHTML = `
+        <button class="opt-btn" style="background:#2ecc71; color:white; font-size:1.4rem; height: 60px; border-radius: 12px; border:none; cursor:pointer;" onclick="checkTFAnswer(true, this)">صح ✅</button>
+        <button class="opt-btn" style="background:#e74c3c; color:white; font-size:1.4rem; height: 60px; border-radius: 12px; border:none; cursor:pointer;" onclick="checkTFAnswer(false, this)">خطأ ❌</button>
+    `;
+
+    startTimer();
+}
+
+function checkAnswer(selected, btn) {
+    clearInterval(timerInterval);
+    const buttons = document.querySelectorAll('#optionsArea .opt-btn');
+    buttons.forEach(b => b.disabled = true);
+
+    let isCorrect = (selected === currentCorrect);
+    
+    if(isCorrect) {
+        score++;
+        soundCorrect.play(); // تشغيل صوت الإجابة الصحيحة
+        btn.style.background = "#2ecc71";
+        btn.style.color = "white";
+    } else {
+        soundWrong.play(); // تشغيل صوت الإجابة الخاطئة
+        btn.style.background = "#e74c3c";
+        btn.style.color = "white";
+        buttons.forEach(b => {
+            if(b.innerText === currentCorrect) {
+                b.style.background = "#2ecc71";
+                b.style.color = "white";
+            }
+        });
+    }
+
+    userAnswers.push({ 
+        ar: currentArabic, 
+        sel: selected || "انتهى الوقت", 
+        correct: currentCorrect, 
+        isOk: isCorrect 
+    });
+
+    setTimeout(nextQuestion, 1200);
+}
+
+function speakText(text) {
+    window.speechSynthesis.cancel(); // إيقاف أي نطق سابق
+    let utterance = new SpeechSynthesisUtterance(text);
+    // إذا كانت الكلمة فرنسية نستخدم fr-FR، إذا إنجليزية en-US
+    // كحل وسط عام نستخدم الفرنسي لأنه الأغلب عندك:
+    utterance.lang = 'fr-FR'; 
+    utterance.rate = 0.8;
+    window.speechSynthesis.speak(utterance);
+}
+
+
+// دالة بدء الاختبار (الشامل أو الفرنسي)
+function startFullQuiz(type) {
+    isTrueFalseMode = false;
+    quizCount = 0; 
+    score = 0; 
+    userAnswers = [];
+
+    // جلب جميع المصطلحات من قاعدة البيانات
+    let sourceData = [];
+    for (let category in fullDatabase) {
+        sourceData = sourceData.concat(fullDatabase[category]);
+    }
+
+    // خلط الأسئلة واختيار العدد المطلوب
+    let shuffled = sourceData.sort(() => 0.5 - Math.random());
+    
+    if (type === 'french') {
+        // نختار المصطلحات التي تحتوي على كلمات فرنسية (وهي الغالبة عندك)
+        currentActivePool = shuffled.slice(0, 30);
+        maxQuestionsForCurrentQuiz = 30;
+    } else {
+        // الاختبار الشامل
+        currentActivePool = shuffled.slice(0, 40);
+        maxQuestionsForCurrentQuiz = 40;
+    }
+
+    document.getElementById('totalQNum').innerText = maxQuestionsForCurrentQuiz;
+    document.getElementById('quiz-init-box').classList.add('hidden');
+    document.getElementById('quiz-header').classList.remove('hidden');
+    document.getElementById('quiz-content').classList.remove('hidden');
+    
+    nextQuestion();
+}
+
+// دالة عرض السؤال (الاختيار من متعدد)
+function nextQuestion() {
+    if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
+    
+    quizCount++;
+    document.getElementById('currentQNum').innerText = quizCount;
+    document.getElementById('liveScore').innerText = score;
+
+    // الحصول على السؤال الحالي من المصفوفة التي تم خلطها
+    let item = currentActivePool[quizCount - 1];
+    currentCorrect = item.en; 
+    currentArabic = item.ar;
+    
+    // عرض السؤال في البطاقة
+    document.getElementById('questionText').innerHTML = `
+        <div style="background:#fff; border-right:6px solid var(--secondary); padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+            <small style="color:#888; display:block; margin-bottom:5px;">اختر المصطلح الصحيح لـ :</small>
+            <strong>${currentArabic}</strong>
+        </div>
+    `;
+
+    // إنشاء الخيارات (الإجابة الصحيحة + 3 عشوائية)
+    let opts = [currentCorrect];
+    
+    // جلب خيارات خاطئة من كامل قاعدة البيانات
+    let allPossibleOptions = [];
+    for (let cat in fullDatabase) {
+        allPossibleOptions = allPossibleOptions.concat(fullDatabase[cat].map(i => i.en));
+    }
+
+    while(opts.length < 4) {
+        let randomOpt = allPossibleOptions[Math.floor(Math.random() * allPossibleOptions.length)];
+        if(!opts.includes(randomOpt)) opts.push(randomOpt);
+    }
+    
+    // خلط الخيارات
+    opts.sort(() => Math.random() - 0.5);
+
+    let area = document.getElementById('optionsArea'); 
+    area.innerHTML = "";
+    
+    opts.forEach(o => {
+        let b = document.createElement('button'); 
+        b.className = "opt-btn"; 
+        b.innerText = o;
+        b.onclick = () => checkAnswer(o, b); 
+        area.appendChild(b);
+    });
+
+    startTimer();
+}
+
+// دالة التحقق من الإجابة (الاختيار من متعدد)
+function checkAnswer(selected, btn) {
+    clearInterval(timerInterval);
+    
+    // منع الضغط المتكرر
+    const buttons = document.querySelectorAll('#optionsArea .opt-btn');
+    buttons.forEach(b => b.disabled = true);
+
+    let isCorrect = (selected === currentCorrect);
+    
+    if(isCorrect) {
+        score++;
+        btn.style.background = "#2ecc71";
+        btn.style.color = "white";
+    } else {
+        btn.style.background = "#e74c3c";
+        btn.style.color = "white";
+        // إظهار الإجابة الصحيحة
+        buttons.forEach(b => {
+            if(b.innerText === currentCorrect) {
+                b.style.background = "#2ecc71";
+                b.style.color = "white";
+            }
+        });
+    }
+
+    userAnswers.push({ 
+        ar: currentArabic, 
+        sel: selected || "انتهى الوقت", 
+        correct: currentCorrect, 
+        isOk: isCorrect 
+    });
+
+    setTimeout(nextQuestion, 1200);
+}
+
+function nextQuestion() {
+    if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
+    
+    quizCount++;
+    document.getElementById('currentQNum').innerText = quizCount;
+    document.getElementById('liveScore').innerText = score;
+
+    let item = currentActivePool[quizCount - 1];
+    currentCorrect = item.en; 
+    currentArabic = item.ar;
+    
+    // عرض السؤال مع زر النطق
+    document.getElementById('questionText').innerHTML = `
+        <div style="background:#fff; border-right:6px solid var(--secondary); padding:20px; border-radius:12px; position:relative;">
+            <small style="color:#888; display:block; margin-bottom:5px;">اختر المصطلح الصحيح لـ :</small>
+            <strong>${currentArabic}</strong>
+            <button onclick="speakText('${currentCorrect}')" style="position:absolute; left:10px; top:10px; background:none; border:none; cursor:pointer; font-size:20px;">🔊</button>
+        </div>
+    `;
+
+    let opts = [currentCorrect];
+    let allPossibleOptions = [];
+    for (let cat in fullDatabase) {
+        allPossibleOptions = allPossibleOptions.concat(fullDatabase[cat].map(i => i.en));
+    }
+
+    while(opts.length < 4) {
+        let randomOpt = allPossibleOptions[Math.floor(Math.random() * allPossibleOptions.length)];
+        if(!opts.includes(randomOpt)) opts.push(randomOpt);
+    }
+    
+    opts.sort(() => Math.random() - 0.5);
+
+    let area = document.getElementById('optionsArea'); 
+    area.innerHTML = "";
+    
+    opts.forEach(o => {
+        let b = document.createElement('button'); 
+        b.className = "opt-btn"; 
+        b.innerText = o;
+        b.onclick = () => checkAnswer(o, b); 
+        area.appendChild(b);
+    });
+
+    startTimer();
+}
+
+
+function checkTFAnswer(sel, btn) {
+    clearInterval(timerInterval);
+    
+    // منع الضغط المتكرر
+    const buttons = document.querySelectorAll('.opt-btn');
+    buttons.forEach(b => b.disabled = true);
+    
+    // الوصول لبطاقة السؤال لإضافة التأثيرات عليها
+    const questionCard = document.getElementById('questionText').firstElementChild;
+    let isCorrect = (sel === currentCorrect);
+    
+    if (isCorrect) {
+        score++;
+        // تأثير الإجابة الصحيحة: وميض أخضر خفيف مع تكبير بسيط
+        questionCard.style.borderRightColor = "#2ecc71";
+        questionCard.style.backgroundColor = "#f0fff4";
+        questionCard.style.transform = "scale(1.02)";
+        btn.style.boxShadow = "0 0 20px #2ecc71";
+    } else {
+        // تأثير الإجابة الخاطئة: اهتزاز البطاقة مع وميض أحمر
+        questionCard.style.borderRightColor = "#e74c3c";
+        questionCard.style.backgroundColor = "#fff5f5";
+        questionCard.classList.add('shake-animation'); // إضافة كلاس الاهتزاز
+        btn.style.boxShadow = "0 0 20px #e74c3c";
+    }
+
+    // حفظ الإجابة للمراجعة النهائية
+    userAnswers.push({
+        ar: currentArabic,
+        sel: sel === null ? "انتهى الوقت" : (sel ? "صح" : "خطأ"),
+        correct: currentCorrect ? "صح" : "خطأ",
+        isOk: isCorrect
+    });
+
+    // الانتقال للسؤال التالي بعد ثانية واحدة ليتسنى للطالب رؤية التأثير
+    setTimeout(() => {
+        if (questionCard) {
+            questionCard.style.transform = "scale(1)";
+            questionCard.classList.remove('shake-animation');
+        }
+        nextTrueFalseQuestion();
+    }, 1000);
+}
+
+
+function startTimer() {
+    let timeLeft = TIME_LIMIT;
+    const bar = document.getElementById('timer-bar');
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        timeLeft -= 0.1;
+        bar.style.width = (timeLeft / TIME_LIMIT) * 100 + "%";
+        if (timeLeft <= 0) { clearInterval(timerInterval); isTrueFalseMode ? checkTFAnswer(null, null) : checkAnswer(null, null); }
+    }, 100);
+}
+
+function finishQuiz() {
+    updateLeaderboard(window.currentUser.name, score, window.currentUser.grade);
+    clearInterval(timerInterval);
+    document.getElementById('quiz-content').classList.add('hidden');
+    document.getElementById('quiz-header').classList.add('hidden');
+    document.getElementById('quiz-result').classList.remove('hidden');
+    document.getElementById('finalScore').innerText = score;
+    sendTelegramNotification(`🎯 *نتيجة*\n👤 ${window.currentUser.name}\n✅ الدرجة: ${score}`);
+    let rows = "";
+    userAnswers.forEach(i => {
+        rows += `<tr><td>${i.ar}</td><td style="color:${i.isOk?'green':'red'}">${i.sel}</td><td style="color:green;">${i.correct}</td></tr>`;
+    });
+    document.getElementById('resultsBody').innerHTML = rows;
+}
+
+function goToHome() {
+    document.getElementById('quiz-result').classList.add('hidden');
+    document.getElementById('quiz-header').classList.add('hidden');
+    document.getElementById('quiz-content').classList.add('hidden');
+    document.getElementById('quiz-init-box').classList.remove('hidden');
+}
+
+function closePopup() { document.getElementById('feedback-overlay').classList.add('hidden'); }
+
+window.onload = function() {
+    initStudy();
+    renderTFTests();
+    setTimeout(() => { document.getElementById('feedback-overlay').classList.remove('hidden'); }, 5000);
+};
+// دالة لتحديث وحفظ لوحة المتصدرين
+function updateLeaderboard(name, score, grade) {
+    // 1. جلب البيانات الحالية من المتصفح
+    let leaderboard = JSON.parse(localStorage.getItem('legalQuizLeaderboard')) || [];
+
+    // 2. إضافة النتيجة الجديدة
+    leaderboard.push({ name, score, grade, date: new Date().toLocaleDateString() });
+
+    // 3. ترتيب النتائج من الأعلى للأقل
+    leaderboard.sort((a, b) => b.score - a.score);
+
+    // 4. الاحتفاظ بأعلى 5 فقط
+    leaderboard = leaderboard.slice(0, 5);
+
+    // 5. حفظها مجدداً في المتصفح
+    localStorage.setItem('legalQuizLeaderboard', JSON.stringify(leaderboard));
+
+    // 6. تحديث العرض
+    displayLeaderboard();
+}
+
+// دالة لعرض اللوحة في الواجهة
+function displayLeaderboard() {
+    const listDiv = document.getElementById('leaderboard-list');
+    let leaderboard = JSON.parse(localStorage.getItem('legalQuizLeaderboard')) || [];
+
+    if (leaderboard.length === 0) {
+        listDiv.innerHTML = "<p style='color:#888;'>لا توجد نتائج مسجلة بعد. كن أول المتصدرين!</p>";
+        return;
+    }
+
+    let html = '<table style="width:100%; text-align:right; border-collapse:collapse;">';
+    html += '<tr style="border-bottom:1px solid #eee;"><th>المركز</th><th>الاسم</th><th>الدرجة</th></tr>';
+    
+    leaderboard.forEach((item, index) => {
+        let medal = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : (index + 1);
+        html += `
+            <tr style="height:40px; border-bottom:1px solid #f9f9f9;">
+                <td style="font-weight:bold;">${medal}</td>
+                <td>${item.name} <small style="color:#999;">(${item.grade})</small></td>
+                <td style="color:var(--secondary); font-weight:bold;">${item.score}</td>
+            </tr>
+        `;
+    });
+    
+    html += '</table>';
+    listDiv.innerHTML = html;
+}
+
+// استدعاء الدالة عند تحميل الصفحة
+window.addEventListener('load', displayLeaderboard);
+
+</script>
+
 </body>
 </html>
