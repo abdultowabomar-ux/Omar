@@ -886,41 +886,51 @@ function startSpecificTFQuiz(testNumber) {
 }
 
 function nextTrueFalseQuestion() {
-    if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
+    if (quizCount >= maxQuestionsForCurrentQuiz) {
+        return finishQuiz();
+    }
+    
     quizCount++;
     document.getElementById('currentQNum').innerText = quizCount;
     document.getElementById('liveScore').innerText = score;
 
-    // اختيار سؤال عشوائي من المصفوفة النشطة
-    let item = currentActivePool[quizCount-1]; 
+    let item = currentActivePool[quizCount - 1]; 
     currentArabic = item.q;
     currentCorrect = item.a;
 
-    // --- التعديل هنا لتحويل السؤال إلى بطاقة ---
-    const questionContainer = document.getElementById('questionText');
-    questionContainer.innerHTML = `
-        <div style="
-            background: #fff;
-            border-right: 6px solid var(--primary);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            line-height: 1.6;
-            font-size: 1.3rem;
-            color: #333;
-            text-align: right;
-        ">
-            ${currentArabic}
-        </div>
-    `;
+    // استخراج المصطلح الأجنبي من بين القوسين للنطق، وإذا لم يوجد ينطق الجملة كاملة
+    let match = currentArabic.match(/\(([^)]+)\)/);
+    let termToSpeak = match ? match[1] : currentArabic;
+    let cleanTerm = termToSpeak.split("'").join("\\'");
 
-    // تنسيق أزرار الإجابة لتكون واضحة وأسفل البطاقة
+    // بناء كارت السؤال بشكل آمن
+    let content = '<div style="background: #fff; border-right: 6px solid var(--primary); padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; line-height: 1.6; font-size: 1.3rem; color: #333; text-align: right; position:relative;">';
+    content += currentArabic;
+    content += '<button onclick="speakText(\'' + cleanTerm + '\')" style="position:absolute; left:10px; top:10px; background:#f0f0f0; border:none; cursor:pointer; font-size:18px; border-radius:50%; width:35px; height:35px; display:flex; align-items:center; justify-content:center;">🔊</button>';
+    content += '</div>';
+
+    document.getElementById('questionText').innerHTML = content;
+
+    // بناء أزرار الصح والخطأ برمجياً
     let area = document.getElementById('optionsArea');
-    area.innerHTML = `
-        <button class="opt-btn" style="background:#2ecc71; color:white; font-size:1.4rem; height: 60px; border-radius: 12px; border:none; cursor:pointer;" onclick="checkTFAnswer(true, this)">صح ✅</button>
-        <button class="opt-btn" style="background:#e74c3c; color:white; font-size:1.4rem; height: 60px; border-radius: 12px; border:none; cursor:pointer;" onclick="checkTFAnswer(false, this)">خطأ ❌</button>
-    `;
+    area.innerHTML = "";
+
+    // زر صح
+    let btnTrue = document.createElement('button');
+    btnTrue.className = "opt-btn";
+    btnTrue.style.cssText = "background:#2ecc71; color:white; font-size:1.4rem; height: 60px; border-radius: 12px; border:none; cursor:pointer;";
+    btnTrue.innerText = "صح ✅";
+    btnTrue.onclick = function() { checkTFAnswer(true, btnTrue); };
+
+    // زر خطأ
+    let btnFalse = document.createElement('button');
+    btnFalse.className = "opt-btn";
+    btnFalse.style.cssText = "background:#e74c3c; color:white; font-size:1.4rem; height: 60px; border-radius: 12px; border:none; cursor:pointer;";
+    btnFalse.innerText = "خطأ ❌";
+    btnFalse.onclick = function() { checkTFAnswer(false, btnFalse); };
+
+    area.appendChild(btnTrue);
+    area.appendChild(btnFalse);
 
     startTimer();
 }
@@ -1005,56 +1015,7 @@ function startFullQuiz(type) {
 }
 
 // دالة عرض السؤال (الاختيار من متعدد)
-function nextQuestion() {
-    if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
-    
-    quizCount++;
-    document.getElementById('currentQNum').innerText = quizCount;
-    document.getElementById('liveScore').innerText = score;
 
-    // الحصول على السؤال الحالي من المصفوفة التي تم خلطها
-    let item = currentActivePool[quizCount - 1];
-    currentCorrect = item.en; 
-    currentArabic = item.ar;
-    
-    // عرض السؤال في البطاقة
-    document.getElementById('questionText').innerHTML = `
-        <div style="background:#fff; border-right:6px solid var(--secondary); padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
-            <small style="color:#888; display:block; margin-bottom:5px;">اختر المصطلح الصحيح لـ :</small>
-            <strong>${currentArabic}</strong>
-        </div>
-    `;
-
-    // إنشاء الخيارات (الإجابة الصحيحة + 3 عشوائية)
-    let opts = [currentCorrect];
-    
-    // جلب خيارات خاطئة من كامل قاعدة البيانات
-    let allPossibleOptions = [];
-    for (let cat in fullDatabase) {
-        allPossibleOptions = allPossibleOptions.concat(fullDatabase[cat].map(i => i.en));
-    }
-
-    while(opts.length < 4) {
-        let randomOpt = allPossibleOptions[Math.floor(Math.random() * allPossibleOptions.length)];
-        if(!opts.includes(randomOpt)) opts.push(randomOpt);
-    }
-    
-    // خلط الخيارات
-    opts.sort(() => Math.random() - 0.5);
-
-    let area = document.getElementById('optionsArea'); 
-    area.innerHTML = "";
-    
-    opts.forEach(o => {
-        let b = document.createElement('button'); 
-        b.className = "opt-btn"; 
-        b.innerText = o;
-        b.onclick = () => checkAnswer(o, b); 
-        area.appendChild(b);
-    });
-
-    startTimer();
-}
 
 // دالة التحقق من الإجابة (الاختيار من متعدد)
 function checkAnswer(selected, btn) {
@@ -1092,52 +1053,6 @@ function checkAnswer(selected, btn) {
     setTimeout(nextQuestion, 1200);
 }
 
-function nextQuestion() {
-    if(quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
-    
-    quizCount++;
-    document.getElementById('currentQNum').innerText = quizCount;
-    document.getElementById('liveScore').innerText = score;
-
-    let item = currentActivePool[quizCount - 1];
-    currentCorrect = item.en; 
-    currentArabic = item.ar;
-    
-    // عرض السؤال مع زر النطق
-    document.getElementById('questionText').innerHTML = `
-        <div style="background:#fff; border-right:6px solid var(--secondary); padding:20px; border-radius:12px; position:relative;">
-            <small style="color:#888; display:block; margin-bottom:5px;">اختر المصطلح الصحيح لـ :</small>
-            <strong>${currentArabic}</strong>
-            <button onclick="speakText('${currentCorrect}')" style="position:absolute; left:10px; top:10px; background:none; border:none; cursor:pointer; font-size:20px;">🔊</button>
-        </div>
-    `;
-
-    let opts = [currentCorrect];
-    let allPossibleOptions = [];
-    for (let cat in fullDatabase) {
-        allPossibleOptions = allPossibleOptions.concat(fullDatabase[cat].map(i => i.en));
-    }
-
-    while(opts.length < 4) {
-        let randomOpt = allPossibleOptions[Math.floor(Math.random() * allPossibleOptions.length)];
-        if(!opts.includes(randomOpt)) opts.push(randomOpt);
-    }
-    
-    opts.sort(() => Math.random() - 0.5);
-
-    let area = document.getElementById('optionsArea'); 
-    area.innerHTML = "";
-    
-    opts.forEach(o => {
-        let b = document.createElement('button'); 
-        b.className = "opt-btn"; 
-        b.innerText = o;
-        b.onclick = () => checkAnswer(o, b); 
-        area.appendChild(b);
-    });
-
-    startTimer();
-}
 
 
 function checkTFAnswer(sel, btn) {
@@ -1244,6 +1159,60 @@ function updateLeaderboard(name, score, grade) {
 
     // 6. تحديث العرض
     displayLeaderboard();
+}
+function nextQuestion() {
+    if (quizCount >= maxQuestionsForCurrentQuiz) return finishQuiz();
+
+    quizCount++;
+    document.getElementById('currentQNum').innerText = quizCount;
+    document.getElementById('liveScore').innerText = score;
+
+    let item = currentActivePool[quizCount - 1];
+    currentCorrect = item.en;
+    currentArabic = item.ar;
+
+    // تنظيف المصطلح من أي علامات قد تكسر الكود
+    let cleanTerm = currentCorrect.replace(/'/g, "\\'");
+
+    let questionHTML = `
+        <div style="background:#fff; border-right:6px solid var(--secondary); padding:20px; border-radius:12px; position:relative; box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+            <small style="color:#888; display:block; margin-bottom:5px;">اختر المصطلح الصحيح لـ :</small>
+            <strong style="font-size:1.3rem;">${currentArabic}</strong>
+            <button onclick="speakText('${cleanTerm}')" 
+                    style="position:absolute; left:10px; top:10px; background:#f0f0f0; border:none; cursor:pointer; font-size:20px; border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center;">
+                🔊
+            </button>
+        </div>
+    `;
+
+    document.getElementById('questionText').innerHTML = questionHTML;
+
+    // إنشاء الخيارات
+    let opts = [currentCorrect];
+    let allPossibleOptions = [];
+    for (let cat in fullDatabase) {
+        allPossibleOptions = allPossibleOptions.concat(fullDatabase[cat].map(i => i.en));
+    }
+
+    while (opts.length < 4) {
+        let randomOpt = allPossibleOptions[Math.floor(Math.random() * allPossibleOptions.length)];
+        if (!opts.includes(randomOpt)) opts.push(randomOpt);
+    }
+
+    opts.sort(() => Math.random() - 0.5);
+
+    let area = document.getElementById('optionsArea');
+    area.innerHTML = "";
+
+    opts.forEach(o => {
+        let b = document.createElement('button');
+        b.className = "opt-btn";
+        b.innerText = o;
+        b.onclick = function() { checkAnswer(o, b); };
+        area.appendChild(b);
+    });
+
+    startTimer();
 }
 
 // دالة لعرض اللوحة في الواجهة
